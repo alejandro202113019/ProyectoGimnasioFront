@@ -6,6 +6,7 @@ import Clientes from "./features/clientes";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
+  const [loading, setLoading] = useState(false)
 
   const navigateTo = (page) => {
     setCurrentPage(page);
@@ -14,7 +15,7 @@ function App() {
   const renderPage = () => {
     switch(currentPage) {
       case 'clientes':
-        return <Clientes />;
+        return <Clientes loading={loading} setLoading={setLoading} />;
       case 'inicio':
         return (
           <>
@@ -63,7 +64,7 @@ function App() {
           </button>
         </Sidebar>
       </div>
-      <div className="flex-1 p-8 pl-24">
+      <div className={`flex-1 p-8 pl-24 ${loading ? 'cursor-progress' : ''}`}>
         {renderPage()}
       </div>
     </div>
