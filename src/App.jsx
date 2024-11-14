@@ -64,7 +64,7 @@ function App() {
           </button>
         </Sidebar>
       </div>
-      <div className={`flex-1 p-8 pl-24 ${loading ? 'cursor-progress' : ''}`}>
+      <div className={`flex-1 p-8 pl-24 ${loading ? 'cursor-wait' : ''}`}>
         {renderPage()}
       </div>
     </div>

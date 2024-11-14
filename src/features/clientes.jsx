@@ -196,13 +196,13 @@ function Clientes({loading, setLoading}) {
             <div className="fixed flex pb-0 min-h-28 w-5/12 right-0">
                 <Alert alert1={alert1} mensaje={mensaje} change={chageAlert}/>
             </div>
-            <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-32 pb-4 w-full ${loading ? 'cursor-wait' : ''}`}>
+            <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-32 pb-4 w-full`}>
                 <div className="">
                     <input id="busqueda" type="text" placeholder="BUSCAR" className="ring-2 ring-blue-500 min-w-full min-h-9" value={valor} onChange={handleInputChange}></input>
                 </div>
                 <div className="flex justify-start">
-                    <button type="button" className="rounded-xl cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60 min-w-40 min-h-8" onClick={
+                    <button disabled={loading} type="button" className={`rounded-xl cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
+                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60 min-w-40 min-h-8 ${loading ? 'cursor-wait opacity-50 hover:translate-y-0 hover:scale-100' : 'cursor-pointer'}`} onClick={
                             () => buscar(document.getElementById('busqueda').value)
                         }>BUSCAR</button>
                 </div>
