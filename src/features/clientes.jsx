@@ -9,18 +9,19 @@ function Clientes() {
     const [valor2, setValor2] = useState('');
     const [alert1, setAlert1] = useState(false)
     const [mensaje, setMensaje] = useState("");
-    const [confirmar, setConfirmar] = useState(false)
-    const [nuevo, setNuevo] =  useState(false)
-    const [modificar, setModificar] = useState(false)
-    const [idClente, setIdCliente] = useState("")
-    const [correo, setCorreo] = useState("")
-    const [nacimiento, setNacimiento] = useState("")
-    const [nombre, setNombre] = useState("")
-    const [apellido, setApellido] = useState("")
+    const [confirmar, setConfirmar] = useState(false);
+    const [nuevo, setNuevo] =  useState(false);
+    const [modificar, setModificar] = useState(false);
+    const [idClente, setIdCliente] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [nacimiento, setNacimiento] = useState("");
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const fetchAPI = async () => {
         try {
-            const result = await axios.get('http://localhost:5001/clientes');
+            const result = await axios.get('http://localhost:5001/api/clientes');
             setClientes(result.data)
         } catch(e) {
             console.log('hubo un error :(')
@@ -73,16 +74,20 @@ function Clientes() {
 
         if (id === "") {
             try {
-                const result = await axios.get('http://localhost:5001/clientes');
+                const result = await axios.get('http://localhost:5001/api/clientes');
                 setAlert1(false)
                 setClientes(result.data)
+                setLoading(true)
             } catch(e) {
                 console.log('hubo un error :(')
+            } finally {
+                setLoading(false)
             }
         } else {
             console.log('entro en el fetc del alert')
             try {
-                const result = await axios.get(`http://localhost:5001/clientes/${id}`);
+                const result = await axios.get(`http://localhost:5001/api/clientes/${id}`);
+                setLoading(true)
                 if (result.data.error) {
                     setAlert1(true)
                     setMensaje(result.data.error)
@@ -92,13 +97,15 @@ function Clientes() {
                 }
             } catch(e) {
                  console.log('hubo un error :(')
+            } finally {
+                setLoading(false)
             }
         }
     }
 
     const eliminar = async () => {
         try {
-            const result = await axios.delete(`http://localhost:5001/clientes/${idClente}`);
+            const result = await axios.delete(`http://localhost:5001/api/clientes/${idClente}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -115,7 +122,7 @@ function Clientes() {
 
     const agregar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
         try {
-            const result = await axios.post(`http://localhost:5001/clientes`,{
+            const result = await axios.post(`http://localhost:5001/api/clientes`,{
                 Apellido: apellido,
                 Email: correo,
                 Fecha_Nacimiento: nacimiento,
@@ -139,7 +146,7 @@ function Clientes() {
 
     const actualizar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
         try {
-            const result = await axios.put(`http://localhost:5001/clientes/${documento}`,{
+            const result = await axios.put(`http://localhost:5001/api/clientes/${documento}`,{
                 Apellido: apellido,
                 Email: correo,
                 Fecha_Nacimiento: nacimiento,
@@ -171,7 +178,7 @@ function Clientes() {
             <div className="fixed flex pb-0 min-h-28 w-5/12 right-0">
                 <Alert alert1={alert1} mensaje={mensaje} change={chageAlert}/>
             </div>
-            <div className="flex grid grid-cols-4 grid-rows-1 gap-5 pt-32 pb-4 w-full">
+            <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-32 pb-4 w-full ${loading ? 'cursor-loading' : ''}`}>
                 <div className="">
                     <input id="busqueda" type="text" placeholder="BUSCAR" className="ring-2 ring-blue-500 min-w-full min-h-9" value={valor} onChange={handleInputChange}></input>
                 </div>
@@ -187,7 +194,7 @@ function Clientes() {
                 </div>
             </div>
             <hr className="my-3" />
-            <div>
+            <div className={`${loading ? 'cursor-loading' : ''}`}>
                 <Tabla clientes={clientes} eliminar={eliminar} chageConfirmation={chageConfirmation} changeUpdate={changeUpdate}/>
             </div>
         </>
