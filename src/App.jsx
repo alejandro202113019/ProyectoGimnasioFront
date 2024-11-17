@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { LifeBuoy, Receipt, Boxes, Package, UserCircle, BarChart3, LayoutDashboard, Settings } from "lucide-react";
-import Sidebar from "./features/sidebar";
-import { SidebarItem } from "./features/sidebar";
-import Clientes from "./features/clientes";
+import Sidebar from "./modules/sidebar";
+import { SidebarItem } from "./modules/sidebar";
+import Clientes from "./modules/clientes";
+import Inventario from "./modules/inventario";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -15,7 +16,7 @@ function App() {
   const renderPage = () => {
     switch(currentPage) {
       case 'clientes':
-        return <Clientes loading={loading} setLoading={setLoading} />;
+        return <Clientes loading={loading} setLoading={setLoading}/>;
       case 'inicio':
         return (
           <>
@@ -23,6 +24,8 @@ function App() {
             <p>Este es el inicio de la pagina</p>
           </>
         );
+      case 'inventario':
+        return <Inventario loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -35,7 +38,7 @@ function App() {
 
   return (
     <div className="flex">
-      <div className="fixed">
+      <div>
         <Sidebar>
           <button onClick={() => navigateTo('inicio')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
             <SidebarItem icon={<LayoutDashboard size={20} />} text="Inicio" alert />
@@ -46,7 +49,7 @@ function App() {
           <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
             <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
           </button>
-          <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+          <button onClick={() => navigateTo('inventario')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
             <SidebarItem icon={<Boxes size={20} />} text="Inventory" />
           </button>
           <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
@@ -64,7 +67,7 @@ function App() {
           </button>
         </Sidebar>
       </div>
-      <div className={`flex-1 p-8 pl-24 ${loading ? 'cursor-wait' : ''}`}>
+      <div className={`flex-1 p-8 ${loading ? 'cursor-wait' : ''} overflow-y-auto max-h-screen`}>
         {renderPage()}
       </div>
     </div>
