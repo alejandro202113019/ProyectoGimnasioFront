@@ -6,7 +6,7 @@ export default function Confirmation( {confirmar, changeConfirmation, eliminar} 
                 <div className="fixed w-11/12 h-5/6 grid grid-cols-9 grid-rows-7 gap-3">
                     <div className=" rounded-xl grid grid-cols-9 grid-rows-5 row-start-3 col-span-3 col-end-7 row-span-2 bg-indigo-400">
                         <div className="col-span-9 col-end-10 row-span-3 content-center text-center text-white text-lg">
-                            ¿Está seguro que desea eliminar los datos del cliente?
+                            ¿Está seguro que desea eliminar los datos?
                         </div>
                         <div className=" row-start-5 col-span-3 col-end-7">
                             <button onClick={(e) => changeConfirmation(false,"")} type="button" className="rounded-xl cursor-pointer bg-green-500 transition ease-in-out 

@@ -10,6 +10,8 @@ export default function TablaClientes({clientes, chageConfirmation, changeUpdate
                             <th className="border border-slate-600">Nacimiento</th>
                             <th className="border border-slate-600">Teléfono</th>
                             <th className="border border-slate-600">Correo</th>
+                            <th className="border border-slate-600">Nombre plan</th>
+                            <th className="border border-slate-600">Estado membresia</th>
                             <th className="border border-slate-600">Acciones</th>
                         </tr>
                     </thead>
@@ -20,9 +22,11 @@ export default function TablaClientes({clientes, chageConfirmation, changeUpdate
                                     <td className="border border-slate-700 text-center">{cliente.ID_Cliente}</td>
                                     <td className="border border-slate-700 text-center">{cliente.Nombre}</td>
                                     <td className="border border-slate-700 text-center">{cliente.Apellido}</td>
-                                    <td className="border border-slate-700 text-center">{cliente.Fecha_Nacimiento}</td>
+                                    <td className="border border-slate-700 text-center">{formatDate(cliente.Fecha_Nacimiento)}</td>
                                     <td className="border border-slate-700 text-center">{cliente.Telefono}</td>
                                     <td className="border border-slate-700 text-center">{cliente.Email}</td>
+                                    <td className="border border-slate-700 text-center">{cliente.Nombre_Plan}</td>
+                                    <td className="border border-slate-700 text-center">{cliente.Estado}</td>
                                     <td className="border border-slate-700 grid grid-cols-1">
                                         <button onClick={(e) => changeUpdate(
                                             true,
@@ -54,6 +58,8 @@ export default function TablaClientes({clientes, chageConfirmation, changeUpdate
                             <th className="border border-slate-600">Nacimiento</th>
                             <th className="border border-slate-600">Teléfono</th>
                             <th className="border border-slate-600">Correo</th>
+                            <th className="border border-slate-600">Nombre plan</th>
+                            <th className="border border-slate-600">Estado membresia</th>
                             <th className="border border-slate-600">Acciones</th>
                         </tr>
                     </thead>
@@ -62,9 +68,11 @@ export default function TablaClientes({clientes, chageConfirmation, changeUpdate
                             <td className="border border-slate-700 text-center">{clientes.ID_Cliente}</td>
                             <td className="border border-slate-700 text-center">{clientes.Nombre}</td>
                             <td className="border border-slate-700 text-center">{clientes.Apellido}</td>
-                            <td className="border border-slate-700 text-center">{clientes.Fecha_Nacimiento}</td>
+                            <td className="border border-slate-700 text-center">{formatDate(clientes.Fecha_Nacimiento)}</td>
                             <td className="border border-slate-700 text-center">{clientes.Telefono}</td>
                             <td className="border border-slate-700 text-center">{clientes.Email}</td>
+                            <td className="border border-slate-700 text-center">{clientes.Nombre_Plan}</td>
+                            <td className="border border-slate-700 text-center">{clientes.Estado}</td>
                             <td className="border border-slate-700 grid grid-cols-1">
                                 <button onClick={(e) => changeUpdate(
                                             true,
@@ -88,4 +96,17 @@ export default function TablaClientes({clientes, chageConfirmation, changeUpdate
             <></>
         )
     }
+}
+
+function formatDate(dateString) {
+    // Convertir el string de fecha a un objeto Date
+    const date = new Date(dateString);
+
+    // Obtener el día, mes y año
+    const day = date.getUTCDate();
+    const month = date.toLocaleString('default', { month: 'long' }); // Mes en texto
+    const year = date.getUTCFullYear();
+
+    // Retornar en el formato deseado
+    return `${day}/${month}/${year}`;
 }

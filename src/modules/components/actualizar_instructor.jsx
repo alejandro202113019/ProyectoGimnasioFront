@@ -1,8 +1,7 @@
-export default function Update( {modificar, handleChange1, handleChange2, 
-    valor1, valor2,nombre, apellido, nacimiento, correo, 
-    setModificar, actualizar, setNombre, setApellido, setNacimiento, setCorreo} ) {
+export default function ActualizarInstructor( {modificar, handleChange1, handleChange2, valor1, valor2, 
+    nombre, apellido, especialidad, correo, setModificar, actualizar, setNombre, setApellido, setEspecialidad, setCorreo} ) {
 
-    const isFormValid = nombre && apellido && nacimiento && valor1 && correo && valor2;
+    const isFormValid = nombre && apellido && especialidad && valor1 && correo && valor2;
 
     if (modificar) {
         return (
@@ -19,7 +18,7 @@ export default function Update( {modificar, handleChange1, handleChange2,
                             <input value={apellido} onChange={(e) => setApellido(e.target.value)} id="Apellido" type="text" placeholder="Apellido" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
                         </div>
                         <div className=" rounded-xl col-span-5 row-start-6 col-end-6 flex justify-center">
-                            <input value={formatDateForInput(nacimiento)} onChange={(e) => setNacimiento(e.target.value)} id="Nacimiento" type="date" placeholder="Nacimiento" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
+                            <input value={especialidad} onChange={(e) => setEspecialidad(e.target.value)} id="Especialidad" type="text" placeholder="Especialidad" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
                         </div>
                         <div className=" rounded-xl col-span-5 row-start-6 col-end-11 flex justify-center">
                             <input value={valor1} onChange={handleChange1} id="Documento" disabled={true} type="text" placeholder="Documento" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
@@ -38,7 +37,7 @@ export default function Update( {modificar, handleChange1, handleChange2,
                             <button onClick={(e) => actualizar(
                                     document.getElementById('Nombre').value,
                                     document.getElementById('Apellido').value,
-                                    document.getElementById('Nacimiento').value,
+                                    document.getElementById('Especialidad').value,
                                     document.getElementById('Documento').value,
                                     document.getElementById('Correo').value,
                                     document.getElementById('Teléfono').value
@@ -52,24 +51,4 @@ export default function Update( {modificar, handleChange1, handleChange2,
         )
     }
 
-}
-
-function formatDateForInput(dateString) {
-    if (!dateString) return null;
-    
-    // Try to parse the date string
-    const date = new Date(dateString);
-    
-    // Check if the date is valid
-    if (isNaN(date.getTime())) {
-      console.error('Invalid date:', dateString);
-      return '';
-    }
-    
-    // Format the date as YYYY-MM-DD
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate() + 1).padStart(2, '0');
-    
-    return `${year}-${month}-${day}`;
 }

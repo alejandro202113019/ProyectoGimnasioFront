@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import TablaClientes from "./components/tabla_clientes"
+import TablaInstructores from "./components/tabla_instructores";
 import Alert from "./components/alert";
+import NuevoInstructor from "./components/nuevo_instructor";
 import Confirmation from "./components/confirmacion";
-import New from "./components/nuevo_cliente";
-import Update from "./components/actualizar_cliente";
+import ActualizarInstructor from "./components/actualizar_instructor";
 
 
-function Clientes({loading, setLoading}) {
-    const [clientes, setClientes] = useState(null);
+function Instructores({loading, setLoading}) {
+    const [data, setData] = useState(null);
     const [valor, setValor] = useState('');
     const [valor1, setValor1] = useState('');
     const [valor2, setValor2] = useState('');
@@ -17,17 +17,17 @@ function Clientes({loading, setLoading}) {
     const [confirmar, setConfirmar] = useState(false);
     const [nuevo, setNuevo] =  useState(false);
     const [modificar, setModificar] = useState(false);
-    const [idClente, setIdCliente] = useState("");
+    const [idInstructor, setIdInstructor] = useState("");
     const [correo, setCorreo] = useState("");
-    const [nacimiento, setNacimiento] = useState("");
+    const [especialidad, setEspecialidad] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
 
     const fetchAPI = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/clientes');
-            setClientes(result.data)
+            const result = await axios.get('http://localhost:5001/api/instructores');
+            setData(result.data)
         } catch(e) {
             console.log('hubo un error :(')
         } finally {
@@ -59,7 +59,7 @@ function Clientes({loading, setLoading}) {
     }
 
     const chageConfirmation = (state, id) => {
-        setIdCliente(id)
+        setIdInstructor(id)
         setConfirmar(state)
     }
 
@@ -67,11 +67,11 @@ function Clientes({loading, setLoading}) {
         setNuevo(state)
     }
 
-    const changeUpdate = (state, nombre, apellido, nacimiento, documento, correo, telefono) => {
+    const changeUpdate = (state, nombre, apellido, especialidad, documento, correo, telefono) => {
         setModificar(state)
         setNombre(nombre)
         setApellido(apellido)
-        setNacimiento(nacimiento)
+        setEspecialidad(especialidad)
         setValor1(documento)
         setValor2(telefono)
         setCorreo(correo)
@@ -82,9 +82,9 @@ function Clientes({loading, setLoading}) {
         if (id === "") {
             try {
                 setLoading(true)
-                const result = await axios.get('http://localhost:5001/api/clientes');
+                const result = await axios.get('http://localhost:5001/api/instructores');
                 setAlert1(false)
-                setClientes(result.data)
+                setData(result.data)
             } catch(e) {
                 console.log('hubo un error :(')
             } finally {
@@ -93,12 +93,12 @@ function Clientes({loading, setLoading}) {
         } else {
             try {
                 setLoading(true)
-                const result = await axios.get(`http://localhost:5001/api/clientes/${id}`);
+                const result = await axios.get(`http://localhost:5001/api/instructores/${id}`);
                 if (result.data.error) {
                     setAlert1(true)
                     setMensaje(result.data.error)
                 } else {
-                    setClientes(result.data)
+                    setData(result.data)
                     setAlert1(false)
                 }
             } catch(e) {
@@ -110,9 +110,10 @@ function Clientes({loading, setLoading}) {
     }
 
     const eliminar = async () => {
+        console.log(idInstructor)
         try {
             setLoading(true)
-            const result = await axios.delete(`http://localhost:5001/api/clientes/${idClente}`);
+            const result = await axios.delete(`http://localhost:5001/api/instructores/${idInstructor}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -129,14 +130,14 @@ function Clientes({loading, setLoading}) {
         setConfirmar(false)
     }
 
-    const agregar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
+    const agregar = async (nombre, apellido, especialidad, documento, correo, telefono) => {
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/clientes`,{
+            const result = await axios.post(`http://localhost:5001/api/instructores`,{
                 Apellido: apellido,
                 Email: correo,
-                Fecha_Nacimiento: nacimiento,
-                ID_Cliente: parseInt(documento),
+                Especialidad: especialidad,
+                ID_Instructor: parseInt(documento),
                 Nombre: nombre,
                 Telefono: telefono
             });
@@ -156,13 +157,13 @@ function Clientes({loading, setLoading}) {
         setNuevo(false)
     }
 
-    const actualizar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
+    const actualizar = async (nombre, apellido, especialidad, documento, correo, telefono) => {
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/clientes/${documento}`,{
+            const result = await axios.put(`http://localhost:5001/api/instructores/${documento}`, {
                 Apellido: apellido,
                 Email: correo,
-                Fecha_Nacimiento: nacimiento,
+                Especialidad: especialidad,
                 Nombre: nombre,
                 Telefono: telefono
             });
@@ -186,10 +187,29 @@ function Clientes({loading, setLoading}) {
         
         <>  
             <Confirmation confirmar={confirmar} changeConfirmation={chageConfirmation} eliminar={eliminar}/>
-            <New agregar={agregar} nuevo={nuevo} changeNuevo={changeNuevo} handleChange1={handleInputChange1} handleChange2={handleInputChange2} valor1={valor1} valor2={valor2}/>
-            <Update modificar={modificar} setModificar={setModificar} actualizar={actualizar} valor1={valor1} valor2={valor2} nombre={nombre} 
-            apellido={apellido} handleChange1={handleInputChange1} handleChange2={handleInputChange2} setNombre={setNombre} setApellido={setApellido}
-            setNacimiento={setNacimiento} setCorreo={setCorreo} nacimiento={nacimiento} correo={correo}/>
+            <NuevoInstructor 
+                agregar={agregar} 
+                nuevo={nuevo} 
+                changeNuevo={changeNuevo} 
+                handleChange1={handleInputChange1} 
+                handleChange2={handleInputChange2} 
+                valor1={valor1} 
+                valor2={valor2}/>
+            <ActualizarInstructor 
+                modificar={modificar} 
+                setModificar={setModificar} 
+                actualizar={actualizar} 
+                valor1={valor1} valor2={valor2} 
+                nombre={nombre} 
+                apellido={apellido} 
+                handleChange1={handleInputChange1} 
+                handleChange2={handleInputChange2} 
+                setNombre={setNombre} 
+                setApellido={setApellido}
+                setEspecialidad={setEspecialidad} 
+                setCorreo={setCorreo} 
+                especialidad={especialidad}
+                correo={correo}/>
             <div className="fixed flex pb-0 min-h-28 w-5/12 right-0">
                 <Alert alert1={alert1} mensaje={mensaje} change={chageAlert}/>
             </div>
@@ -210,11 +230,11 @@ function Clientes({loading, setLoading}) {
             </div>
             <hr className="my-3" />
             <div>
-                <TablaClientes clientes={clientes} eliminar={eliminar} chageConfirmation={chageConfirmation} changeUpdate={changeUpdate}/>
+                <TablaInstructores data={data} eliminar={eliminar} chageConfirmation={chageConfirmation} changeUpdate={changeUpdate}/>
             </div>
         </>
     )
 
 }
 
-export default Clientes
+export default Instructores

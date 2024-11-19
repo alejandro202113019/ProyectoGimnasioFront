@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 
-export default function New( {nuevo, handleChange1, handleChange2, valor1, valor2, changeNuevo, agregar} ) {
+export default function NuevoInstructor( {nuevo, handleChange1, handleChange2, valor1, valor2, changeNuevo, agregar} ) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
-    const [nacimiento, setNacimiento] = useState('');
+    const [especialidad, setEspecialidad] = useState('');
     const [correo, setCorreo] = useState('');
 
-    const isFormValid = nombre && apellido && nacimiento && valor1 && correo && valor2;
+    const isFormValid = nombre && apellido && especialidad && valor1 && correo && valor2;
 
     if (nuevo) {
         return (
@@ -14,7 +14,7 @@ export default function New( {nuevo, handleChange1, handleChange2, valor1, valor
                 <div className="fixed w-full h-full grid grid-cols-10 grid-rows-7">
                     <div className="rounded-xl grid grid-cols-10 grid-rows-10 row-start-2 col-span-5 col-end-8 row-span-5 bg-indigo-400">
                         <div className="rounded-xl col-span-10 row-start-2 text-center text-white text-5xl">
-                            Nuevo Cliente
+                            Nuevo Instructor
                         </div>
                         <div className=" rounded-xl col-span-5 row-start-5 col-end-6 flex justify-center">
                             <input onChange={(e) => setNombre(e.target.value)} id="Nombre" type="text" placeholder="Nombre" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
@@ -23,7 +23,7 @@ export default function New( {nuevo, handleChange1, handleChange2, valor1, valor
                             <input onChange={(e) => setApellido(e.target.value)} id="Apellido" type="text" placeholder="Apellido" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
                         </div>
                         <div className=" rounded-xl col-span-5 row-start-6 col-end-6 flex justify-center">
-                            <input onChange={(e) => setNacimiento(e.target.value)} id="Nacimiento" type="date" placeholder="Nacimiento" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
+                            <input onChange={(e) => setEspecialidad(e.target.value)} id="Especialidad" type="text" placeholder="Especialidad" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
                         </div>
                         <div className=" rounded-xl col-span-5 row-start-6 col-end-11 flex justify-center">
                             <input onChange={handleChange1} id="Documento" type="text" placeholder="Documento" className="ring-2 ring-blue-500 w-11/12 h-4/6"></input>
@@ -43,7 +43,7 @@ export default function New( {nuevo, handleChange1, handleChange2, valor1, valor
                                 (e) => agregar(
                                     document.getElementById('Nombre').value,
                                     document.getElementById('Apellido').value,
-                                    document.getElementById('Nacimiento').value,
+                                    document.getElementById('Especialidad').value,
                                     document.getElementById('Documento').value,
                                     document.getElementById('Correo').value,
                                     document.getElementById('Teléfono').value

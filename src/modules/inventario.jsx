@@ -20,10 +20,13 @@ function Inventario({loading, setLoading}) {
 
     const fetchAPI = async () => {
         try {
+            setLoading(true)
             const result = await axios.get('http://localhost:5001/api/equipos');
             setData(result.data)
         } catch(e) {
             console.log('hubo un error :(')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -164,7 +167,7 @@ function Inventario({loading, setLoading}) {
             </div>
             <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-32 pb-4 w-full`}>
                 <div className="">
-                    <input value={idEquipo} id="busqueda" type="text" placeholder="Buscar por ID" className="ring-2 ring-blue-500 min-w-full min-h-9" onChange={handleInputChange}></input>
+                    <input id="busqueda" type="text" placeholder="Buscar por ID" className="ring-2 ring-blue-500 min-w-full min-h-9" onChange={handleInputChange}></input>
                 </div>
                 <div className="flex justify-start">
                     <button disabled={loading} type="button" className={`rounded-xl cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 

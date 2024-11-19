@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { LifeBuoy, Receipt, Boxes, Package, UserCircle, BarChart3, LayoutDashboard, Settings } from "lucide-react";
+import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake } from "lucide-react";
 import Sidebar from "./modules/sidebar";
 import { SidebarItem } from "./modules/sidebar";
 import Clientes from "./modules/clientes";
 import Inventario from "./modules/inventario";
+import Instructores from "./modules/instructores";
+import Plan from "./modules/planes";
+import Membresias from "./modules/membresias";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -26,6 +29,12 @@ function App() {
         );
       case 'inventario':
         return <Inventario loading={loading} setLoading={setLoading}/>
+      case 'instructores':
+        return <Instructores loading={loading} setLoading={setLoading}/>
+      case 'planes':
+        return <Plan loading={loading} setLoading={setLoading}/>
+      case 'membresias':
+        return <Membresias  loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -41,19 +50,25 @@ function App() {
       <div>
         <Sidebar>
           <button onClick={() => navigateTo('inicio')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<LayoutDashboard size={20} />} text="Inicio" alert />
+            <SidebarItem icon={<LayoutDashboard size={20} />} text="Inicio"/>
           </button>
           <button onClick={() => navigateTo('clientes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
             <SidebarItem icon={<UserCircle size={20} />} text="Clientes" />
           </button>
-          <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
+          <button onClick={() => navigateTo('instructores')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+            <SidebarItem icon={<PersonStanding size={20} />} text="Instructores"/>
           </button>
           <button onClick={() => navigateTo('inventario')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<Boxes size={20} />} text="Inventory" />
+            <SidebarItem icon={<Boxes size={20} />} text="Inventario" />
+          </button>
+          <button onClick={() => navigateTo('planes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+            <SidebarItem icon={<BookText size={20} />} text="Planes" />
+          </button>
+          <button onClick={() => navigateTo('membresias')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+            <SidebarItem icon={<Handshake size={20} />} text="Membresias" />
           </button>
           <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<Package size={20} />} text="Orders" alert />
+            <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
           </button>
           <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
             <SidebarItem icon={<Receipt size={20} />} text="Billing" />
