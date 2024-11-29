@@ -1,9 +1,9 @@
 export default function TablaMembresias({data, chageConfirmation, changeUpdate}) {
     if (data !== null && Array.isArray(data)) {
         return (
-            <table id="tablaclientes" className="border-collapse border border-slate-500 w-full">
-                    <thead>
-                        <tr className="bg-indigo-500">
+            <table id="tablaclientes" className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden">
+            <thead>
+                        <tr className="bg-indigo-600 text-white">
                             <th className="border border-slate-600">ID</th>
                             <th className="border border-slate-600">Nombre</th>
                             <th className="border border-slate-600">Plan</th>
@@ -34,15 +34,15 @@ export default function TablaMembresias({data, chageConfirmation, changeUpdate})
                                             membresia.ID_Cliente,
                                             membresia.Email,
                                             membresia.Telefono
-                                        )} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">PAGAR</button>
+                                        )} type="button" className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                            <i className="fas fa-coins"></i> PAGAR</button>
                                         <button onClick={(e) => changeUpdate(
                                                     true,
                                                     membresia.ID_Cliente,
                                                     membresia.ID_Cliente_Membresia,
                                                     membresia.nombre
-                                        )} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">ASIGNAR</button>
+                                        )} type="button" className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                            <i className="fas fa-edit"></i> ASIGNAR</button>
                                     </td>
                                 </tr>
                             ))
@@ -52,9 +52,9 @@ export default function TablaMembresias({data, chageConfirmation, changeUpdate})
         )
     } else if (!Array.isArray(data) && data !== null && !data.error) {
         return (
-            <table className="border-collapse border border-slate-500 w-full">
-                    <thead>
-                        <tr className="bg-indigo-500">
+            <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden">
+            <thead>
+                        <tr className="bg-indigo-600 text-white">
                             <th className="border border-slate-600">ID</th>
                             <th className="border border-slate-600">Nombre</th>
                             <th className="border border-slate-600">Plan</th>
@@ -83,15 +83,15 @@ export default function TablaMembresias({data, chageConfirmation, changeUpdate})
                                             data.ID_Cliente,
                                             data.Email,
                                             data.Telefono
-                                        )} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">PAGAR</button>
+                                        )} type="button" className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                    <i className="fas fa-coins"></i> PAGAR</button>
                                 <button onClick={(e) => changeUpdate(
                                             true,
                                             data.ID_Cliente,
                                             data.ID_Cliente_Membresia,
                                             data.nombre
-                                )} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">ASIGNAR</button>
+                                )} type="button" className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                    <i className="fas fa-edit"></i> ASIGNAR</button>
                             </td>
                         </tr>
                     </tbody>

@@ -196,39 +196,54 @@ function Membresias({loading, setLoading}) {
     }
 
     return (
-        
-        <>  
+
+        <>
             <Confirmation confirmar={confirmar} changeConfirmation={chageConfirmation} eliminar={eliminar}/>
-            <Asignar 
-                asignar={asignar} 
-                data={data} 
-                planes={planes} 
-                changeUpdate={changeUpdate} 
-                nombre={nombre} 
+            <Asignar
+                asignar={asignar}
+                data={data}
+                planes={planes}
+                changeUpdate={changeUpdate}
+                nombre={nombre}
                 id={idClente}
-                idClienteMembresia={idClienteMembresia} 
+                idClienteMembresia={idClienteMembresia}
                 agregar={agregar}
                 actualizar={actualizar}/>
-            <Update modificar={modificar} setModificar={setModificar} actualizar={actualizar} valor1={valor1} valor2={valor2} nombre={nombre} 
-            apellido={apellido} handleChange1={handleInputChange1} handleChange2={handleInputChange2} setNombre={setNombre} setApellido={setApellido}
-            setNacimiento={setNacimiento} setCorreo={setCorreo} nacimiento={nacimiento} correo={correo}/>
+            <Update modificar={modificar} setModificar={setModificar} actualizar={actualizar} valor1={valor1}
+                    valor2={valor2} nombre={nombre}
+                    apellido={apellido} handleChange1={handleInputChange1} handleChange2={handleInputChange2}
+                    setNombre={setNombre} setApellido={setApellido}
+                    setNacimiento={setNacimiento} setCorreo={setCorreo} nacimiento={nacimiento} correo={correo}/>
             <div className="fixed flex pb-0 min-h-28 w-5/12 right-0">
                 <Alert alert1={alert1} mensaje={mensaje} change={chageAlert}/>
             </div>
-            <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-32 pb-4 w-full`}>
+
+
+            <div className="flex items-center text-4xl font-semibold text-indigo-700 mb-6">
+                <i className="fas fa-id-card mr-3 text-5xl"></i>
+                <span>GESTIÓN MEMBRESIAS</span>
+            </div>
+
+            <hr className="border-t-2 border-indigo-400 my-4"/>
+
+            <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-25 pb-4 w-full`}>
                 <div className="">
-                    <input id="busqueda" type="text" placeholder="Buscar por ID" className="ring-2 ring-blue-500 min-w-full min-h-9" value={valor} onChange={handleInputChange}></input>
+                    <input id="busqueda" type="text" placeholder="Buscar por ID"
+                           className="ring-2 ring-blue-500 min-w-full min-h-9 px-3 py-2 rounded-md" value={valor}
+                           onChange={handleInputChange}></input>
                 </div>
                 <div className="flex justify-start">
-                    <button disabled={loading} type="button" className={`rounded-xl cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60 min-w-40 min-h-8 ${loading ? 'cursor-wait opacity-50 hover:translate-y-0 hover:scale-100' : 'cursor-pointer'}`} onClick={
-                            () => buscar(document.getElementById('busqueda').value)
-                        }>BUSCAR</button>
+                    <button disabled={loading} type="button" className={`rounded-xl cursor-pointer bg-indigo-400 m-0.5 text-white transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 min-w-40 min-h-8 ${loading ? 'cursor-wait opacity-50 hover:translate-y-0 hover:scale-100' : 'cursor-pointer'}`}
+                            onClick={
+                                () => buscar(document.getElementById('busqueda').value)
+                            }><i className="fas fa-search"></i> BUSCAR
+                    </button>
                 </div>
             </div>
-            <hr className="my-3" />
+            <hr className="my-3"/>
             <div>
-                <TablaMembresias data={data} eliminar={eliminar} chageConfirmation={chageConfirmation} changeUpdate={changeUpdate}/>
+                <TablaMembresias data={data} eliminar={eliminar} chageConfirmation={chageConfirmation}
+                                 changeUpdate={changeUpdate}/>
             </div>
         </>
     )

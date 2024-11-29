@@ -1,17 +1,31 @@
-export default function Alert({alert1, mensaje, change}) {
+export default function Alert({ alert1, mensaje, change }) {
     if (alert1) {
         return (
-            <div role="alert" class="mb-4 relative p-3 text-sm text-white bg-indigo-400 rounded-md flex justify-start w-11/12">
-                    {mensaje}
-                <button onClick={change} class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <div role="alert" className="mb-4 relative p-4 text-sm text-white bg-indigo-500 rounded-lg shadow-lg flex justify-between items-center w-11/12 transition-all transform hover:scale-105">
+                <span>{mensaje}</span>
+                <button
+                    onClick={change}
+                    className="flex items-center justify-center transition-all w-8 h-8 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 active:bg-opacity-40 absolute top-2 right-2"
+                    type="button"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="h-5 w-5 text-white"
+                        strokeWidth="2"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18L18 6M6 6l12 12"
+                        ></path>
+                    </svg>
                 </button>
             </div>
-        )
+        );
     } else {
-        return (
-            <></>
-        )
+        return <></>;
     }
-    
 }

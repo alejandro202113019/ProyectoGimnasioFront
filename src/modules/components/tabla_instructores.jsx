@@ -1,9 +1,9 @@
 export default function TablaInstructores({data, chageConfirmation, changeUpdate}) {
     if (data !== null && Array.isArray(data)) {
         return (
-            <table id="tablaclientes" className="border-collapse border border-slate-500 w-full">
+            <table id="tablaclientes" className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden">
                     <thead>
-                        <tr className="bg-indigo-500">
+                        <tr className="bg-indigo-600 text-white">
                             <th className="border border-slate-600">ID</th>
                             <th className="border border-slate-600">Nombre</th>
                             <th className="border border-slate-600">Apellido</th>
@@ -32,10 +32,10 @@ export default function TablaInstructores({data, chageConfirmation, changeUpdate
                                             instructor.ID_Instructor,
                                             instructor.Email,
                                             instructor.Telefono
-                                        )} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">ACTUALIZAR</button>
-                                        <button onClick={(e) => chageConfirmation(true, instructor.ID_Instructor)} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">ELIMINAR</button>
+                                        )} type="button" className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                            <i className="fas fa-edit"></i> EDITAR</button>
+                                        <button onClick={(e) => chageConfirmation(true, instructor.ID_Instructor)} type="button" className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                            <i className="fas fa-trash-alt"></i> ELIMINAR</button>
                                     </td>
                                 </tr>
                             ))
@@ -45,9 +45,9 @@ export default function TablaInstructores({data, chageConfirmation, changeUpdate
         )
     } else if (!Array.isArray(data) && data !== null && !data.error) {
         return (
-            <table className="border-collapse border border-slate-500 w-full">
+            <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden">
                     <thead>
-                        <tr className="bg-indigo-500">
+                        <tr className="bg-indigo-600 text-white">
                             <th className="border border-slate-600">ID</th>
                             <th className="border border-slate-600">Nombre</th>
                             <th className="border border-slate-600">Apellido</th>
@@ -74,10 +74,10 @@ export default function TablaInstructores({data, chageConfirmation, changeUpdate
                                             data.ID_Instructor,
                                             data.Email,
                                             data.Telefono
-                                        )} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">ACTUALIZAR</button>
-                                <button onClick={(e) => chageConfirmation(true, data.ID_Instructor)} type="button" className="cursor-pointer bg-indigo-400 m-0.5 transition ease-in-out 
-                                        delay-60 hover:-translate-y-1 hover:scale-95 duration-60">ELIMINAR</button>
+                                        )} type="button" className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                    <i className="fas fa-edit"></i> EDITAR</button>
+                                <button onClick={(e) => chageConfirmation(true, data.ID_Instructor)} type="button" className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                                    <i className="fas fa-trash-alt"></i> ELIMINAR</button>
                             </td>
                         </tr>
                     </tbody>
