@@ -1,44 +1,43 @@
 import { useState } from "react";
 
-export default function New({ nuevo, handleChange1, handleChange2, valor1, valor2, changeNuevo, agregar }) {
+export default function NuevoInstructor({
+                                            nuevo, handleChange1, handleChange2, valor1, valor2, changeNuevo, agregar,}) {
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
-    const [nacimiento, setNacimiento] = useState("");
+    const [especialidad, setEspecialidad] = useState("");
     const [correo, setCorreo] = useState("");
 
-    const isFormValid = nombre && apellido && nacimiento && valor1 && correo && valor2;
+    const isFormValid = nombre && apellido && especialidad && valor1 && correo && valor2;
 
     const resetForm = () => {
         setNombre("");
         setApellido("");
-        setNacimiento("");
+        setEspecialidad("");
+        setCorreo("");
         setCorreo("");
 
         handleChange1({ target: { value: "" } });
         handleChange2({ target: { value: "" } });
     };
-
-    // Acción al confirmar
     const clickConfirmar = () => {
-        agregar(nombre, apellido, nacimiento, valor1, correo, valor2);
+        agregar(nombre, apellido, especialidad, valor1, correo, valor2)
         resetForm();
         changeNuevo(false);
-    };
+    }
 
-    // Acción al cancelar
     const clickCancelar = () => {
         resetForm();
         changeNuevo(false);
-    };
+    }
 
     if (!nuevo) return null;
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white rounded-lg shadow-lg w-4/5 max-w-lg p-6 space-y-6">
-                <h2 className="text-2xl font-bold text-center text-gray-800">Nuevo Cliente</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-800">Nuevo Instructor</h2>
 
-                <div className="space-y-4">
+                <form className="space-y-4">
                     <div className="flex flex-col">
                         <label htmlFor="Nombre" className="mb-2 text-sm font-medium text-gray-600">
                             Nombre
@@ -48,7 +47,7 @@ export default function New({ nuevo, handleChange1, handleChange2, valor1, valor
                             onChange={(e) => setNombre(e.target.value)}
                             id="Nombre"
                             type="text"
-                            placeholder="Ingrese el nombre"
+                            placeholder="Nombre"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         />
                     </div>
@@ -62,20 +61,21 @@ export default function New({ nuevo, handleChange1, handleChange2, valor1, valor
                             onChange={(e) => setApellido(e.target.value)}
                             id="Apellido"
                             type="text"
-                            placeholder="Ingrese el apellido"
+                            placeholder="Apellido"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         />
                     </div>
 
                     <div className="flex flex-col">
-                        <label htmlFor="Nacimiento" className="mb-2 text-sm font-medium text-gray-600">
-                            Fecha de nacimiento
+                        <label htmlFor="Especialidad" className="mb-2 text-sm font-medium text-gray-600">
+                            Especialidad
                         </label>
                         <input
-                            value={nacimiento}
-                            onChange={(e) => setNacimiento(e.target.value)}
-                            id="Nacimiento"
-                            type="date"
+                            value={especialidad}
+                            onChange={(e) => setEspecialidad(e.target.value)}
+                            id="Especialidad"
+                            type="text"
+                            placeholder="Especialidad"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         />
                     </div>
@@ -85,11 +85,11 @@ export default function New({ nuevo, handleChange1, handleChange2, valor1, valor
                             Documento
                         </label>
                         <input
-                            onChange={handleChange1}
                             value={valor1}
+                            onChange={handleChange1}
                             id="Documento"
                             type="text"
-                            placeholder="Ingrese el documento"
+                            placeholder="Documento"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         />
                     </div>
@@ -103,7 +103,7 @@ export default function New({ nuevo, handleChange1, handleChange2, valor1, valor
                             onChange={(e) => setCorreo(e.target.value)}
                             id="Correo"
                             type="email"
-                            placeholder="Ingrese el correo electrónico"
+                            placeholder="Correo"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         />
                     </div>
@@ -113,21 +113,21 @@ export default function New({ nuevo, handleChange1, handleChange2, valor1, valor
                             Teléfono
                         </label>
                         <input
-                            onChange={handleChange2}
                             value={valor2}
+                            onChange={handleChange2}
                             id="Teléfono"
                             type="text"
-                            placeholder="Ingrese el teléfono"
+                            placeholder="Teléfono"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         />
                     </div>
-                </div>
+                </form>
 
                 <div className="flex justify-between">
                     <button
                         onClick={() => clickCancelar()}
                         type="button"
-                        className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-transform transform hover:scale-105"
+                        className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-transform transform hover:scale-105"
                     >
                         CANCELAR
                     </button>

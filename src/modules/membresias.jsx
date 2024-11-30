@@ -1,33 +1,47 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import TablaClientes from "./components/tabla_clientes"
+import TablaMembresias from "./components/tabla_membresias";
 import Alert from "./components/alert";
 import Confirmation from "./components/confirmacion";
-import New from "./components/nuevo_cliente";
+import Asignar from "./components/asignar_membresia";
 import Update from "./components/actualizar_cliente";
 
 
-function Clientes({loading, setLoading}) {
-    const [clientes, setClientes] = useState(null);
+function Membresias({loading, setLoading}) {
+    const [data, setData] = useState(null);
+    const [planes, setPlanes] = useState(null);
     const [valor, setValor] = useState('');
     const [valor1, setValor1] = useState('');
     const [valor2, setValor2] = useState('');
     const [alert1, setAlert1] = useState(false)
     const [mensaje, setMensaje] = useState("");
     const [confirmar, setConfirmar] = useState(false);
-    const [nuevo, setNuevo] =  useState(false);
+    const [asignar, setAsignar] =  useState(false);
     const [modificar, setModificar] = useState(false);
     const [idClente, setIdCliente] = useState("");
     const [correo, setCorreo] = useState("");
     const [nacimiento, setNacimiento] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
+    const [idClienteMembresia, setIdClienteMembresia] = useState('');
 
     const fetchAPI = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/clientes');
-            setClientes(result.data)
+            const result = await axios.get('http://localhost:5001/api/membresias');
+            setData(result.data)
+        } catch(e) {
+            console.log('hubo un error :(')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const fetchAPIPlanes = async () => {
+        try {
+            setLoading(true)
+            const result = await axios.get('http://localhost:5001/api/planes');
+            setPlanes(result.data)
         } catch(e) {
             console.log('hubo un error :(')
         } finally {
@@ -36,7 +50,8 @@ function Clientes({loading, setLoading}) {
     }
 
     useEffect(() => {
-        fetchAPI()
+        fetchAPI();
+        fetchAPIPlanes();
     }, []);
 
     const handleInputChange = (event) => {
@@ -67,14 +82,11 @@ function Clientes({loading, setLoading}) {
         setNuevo(state)
     }
 
-    const changeUpdate = (state, nombre, apellido, nacimiento, documento, correo, telefono) => {
-        setModificar(state)
+    const changeUpdate = (state, id, idClienteMembresia, nombre) => {
+        setAsignar(state)
+        setIdCliente(id)
+        setIdClienteMembresia(idClienteMembresia)
         setNombre(nombre)
-        setApellido(apellido)
-        setNacimiento(nacimiento)
-        setValor1(documento)
-        setValor2(telefono)
-        setCorreo(correo)
     }
 
     const buscar = async (id) => {
@@ -82,9 +94,9 @@ function Clientes({loading, setLoading}) {
         if (id === "") {
             try {
                 setLoading(true)
-                const result = await axios.get('http://localhost:5001/api/clientes');
+                const result = await axios.get('http://localhost:5001/api/membresias');
                 setAlert1(false)
-                setClientes(result.data)
+                setData(result.data)
             } catch(e) {
                 console.log('hubo un error :(')
             } finally {
@@ -93,12 +105,12 @@ function Clientes({loading, setLoading}) {
         } else {
             try {
                 setLoading(true)
-                const result = await axios.get(`http://localhost:5001/api/clientes/${id}`);
+                const result = await axios.get(`http://localhost:5001/api/membresias/${id}`);
                 if (result.data.error) {
                     setAlert1(true)
                     setMensaje(result.data.error)
                 } else {
-                    setClientes(result.data)
+                    setData(result.data)
                     setAlert1(false)
                 }
             } catch(e) {
@@ -112,7 +124,7 @@ function Clientes({loading, setLoading}) {
     const eliminar = async () => {
         try {
             setLoading(true)
-            const result = await axios.delete(`http://localhost:5001/api/clientes/${idClente}`);
+            const result = await axios.delete(`http://localhost:5001/api/membresia/${idClente}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -129,16 +141,16 @@ function Clientes({loading, setLoading}) {
         setConfirmar(false)
     }
 
-    const agregar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
+    const agregar = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/clientes`,{
-                Apellido: apellido,
-                Email: correo,
-                Fecha_Nacimiento: nacimiento,
-                ID_Cliente: parseInt(documento),
-                Nombre: nombre,
-                Telefono: telefono
+            const result = await axios.post(`http://localhost:5001/api/membresias`,{
+                Estado: estado,
+                Fecha_Fin: fecha_fin,
+                Fecha_Inicio: fecha_inicio,
+                ID_Cliente: parseInt(id),
+                ID_Membresia: parseInt(id),
+                ID_Plan: id_plan === null ? 2 : parseInt(id_plan)
             });
             if (result.data.message) {
                 setMensaje(result.data.message)
@@ -153,18 +165,19 @@ function Clientes({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setNuevo(false)
+        setAsignar(false)
     }
 
-    const actualizar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
+    const actualizar = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/clientes/${documento}`,{
-                Apellido: apellido,
-                Email: correo,
-                Fecha_Nacimiento: nacimiento,
-                Nombre: nombre,
-                Telefono: telefono
+            const result = await axios.put(`http://localhost:5001/api/membresias/${id}`,{
+                Estado: estado,
+                Fecha_Fin: fecha_fin,
+                Fecha_Inicio: fecha_inicio,
+                ID_Cliente: parseInt(id),
+                ID_Membresia: parseInt(id),
+                ID_Plan: id_plan === null ? 2 : parseInt(id_plan)
             });
             if (result.data.message) {
                 setMensaje(result.data.message)
@@ -179,15 +192,23 @@ function Clientes({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setModificar(false)
+        setAsignar(false)
     }
 
     return (
 
         <>
             <Confirmation confirmar={confirmar} changeConfirmation={chageConfirmation} eliminar={eliminar}/>
-            <New agregar={agregar} nuevo={nuevo} changeNuevo={changeNuevo} handleChange1={handleInputChange1}
-                 handleChange2={handleInputChange2} valor1={valor1} valor2={valor2}/>
+            <Asignar
+                asignar={asignar}
+                data={data}
+                planes={planes}
+                changeUpdate={changeUpdate}
+                nombre={nombre}
+                id={idClente}
+                idClienteMembresia={idClienteMembresia}
+                agregar={agregar}
+                actualizar={actualizar}/>
             <Update modificar={modificar} setModificar={setModificar} actualizar={actualizar} valor1={valor1}
                     valor2={valor2} nombre={nombre}
                     apellido={apellido} handleChange1={handleInputChange1} handleChange2={handleInputChange2}
@@ -197,12 +218,14 @@ function Clientes({loading, setLoading}) {
                 <Alert alert1={alert1} mensaje={mensaje} change={chageAlert}/>
             </div>
 
+
             <div className="flex items-center text-4xl font-semibold text-indigo-700 mb-6">
-                <i className="fas fa-user-alt mr-3 text-5xl"></i>
-                <span>GESTIÓN CLIENTES</span>
+                <i className="fas fa-id-card mr-3 text-5xl"></i>
+                <span>GESTIÓN MEMBRESIAS</span>
             </div>
 
             <hr className="border-t-2 border-indigo-400 my-4"/>
+
             <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-25 pb-4 w-full`}>
                 <div className="">
                     <input id="busqueda" type="text" placeholder="Buscar por ID"
@@ -216,20 +239,15 @@ function Clientes({loading, setLoading}) {
                             }><i className="fas fa-search"></i> BUSCAR
                     </button>
                 </div>
-                <div className="flex justify-end col-end-5">
-                    <button onClick={() => changeNuevo(true)} type="button" className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
-                        <i className="fas fa-plus"></i> NUEVO
-                    </button>
-                </div>
             </div>
             <hr className="my-3"/>
             <div>
-                <TablaClientes clientes={clientes} eliminar={eliminar} chageConfirmation={chageConfirmation}
-                               changeUpdate={changeUpdate}/>
+                <TablaMembresias data={data} eliminar={eliminar} chageConfirmation={chageConfirmation}
+                                 changeUpdate={changeUpdate}/>
             </div>
         </>
     )
 
 }
 
-export default Clientes
+export default Membresias
