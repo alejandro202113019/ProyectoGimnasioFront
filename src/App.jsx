@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AuthProvider } from "./context/AuthContext";
 import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake } from "lucide-react";
 import Sidebar from "./modules/sidebar";
 import { SidebarItem } from "./modules/sidebar";
@@ -7,16 +8,32 @@ import Inventario from "./modules/inventario";
 import Instructores from "./modules/instructores";
 import Plan from "./modules/planes";
 import Membresias from "./modules/membresias";
+import Login from "./modules/Login";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigateTo = (page) => {
     setCurrentPage(page);
   };
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   const renderPage = () => {
+    // Si no está logueado, mostrar página de login
+    if (!isLoggedIn) {
+      return <Login onLogin={handleLogin} />;
+    }
+
+    // Renderizar páginas como antes
     switch(currentPage) {
       case 'clientes':
         return <Clientes loading={loading} setLoading={setLoading}/>;
@@ -34,7 +51,7 @@ function App() {
       case 'planes':
         return <Plan loading={loading} setLoading={setLoading}/>
       case 'membresias':
-        return <Membresias  loading={loading} setLoading={setLoading}/>
+        return <Membresias loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -46,46 +63,53 @@ function App() {
   };
 
   return (
-    <div className="flex">
-      <div>
-        <Sidebar>
-          <button onClick={() => navigateTo('inicio')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<LayoutDashboard size={20} />} text="Inicio"/>
-          </button>
-          <button onClick={() => navigateTo('clientes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<UserCircle size={20} />} text="Clientes" />
-          </button>
-          <button onClick={() => navigateTo('instructores')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<PersonStanding size={20} />} text="Instructores"/>
-          </button>
-          <button onClick={() => navigateTo('inventario')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<Boxes size={20} />} text="Inventario" />
-          </button>
-          <button onClick={() => navigateTo('planes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<BookText size={20} />} text="Planes" />
-          </button>
-          <button onClick={() => navigateTo('membresias')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<Handshake size={20} />} text="Membresias" />
-          </button>
-          <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
-          </button>
-          <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<Receipt size={20} />} text="Billing" />
-          </button>
-          <hr className="my-3" />
-          <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<Settings size={20} />} text="Settings" />
-          </button>
-          <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-            <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
-          </button>
-        </Sidebar>
+    <AuthProvider>
+      <div className="flex">
+        {isLoggedIn && (
+          <div>
+            <Sidebar>
+              <button onClick={() => navigateTo('inicio')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<LayoutDashboard size={20} />} text="Inicio"/>
+              </button>
+              <button onClick={() => navigateTo('clientes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<UserCircle size={20} />} text="Clientes" />
+              </button>
+              <button onClick={() => navigateTo('instructores')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<PersonStanding size={20} />} text="Instructores"/>
+              </button>
+              <button onClick={() => navigateTo('inventario')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Boxes size={20} />} text="Inventario" />
+              </button>
+              <button onClick={() => navigateTo('planes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<BookText size={20} />} text="Planes" />
+              </button>
+              <button onClick={() => navigateTo('membresias')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Handshake size={20} />} text="Membresias" />
+              </button>
+              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
+              </button>
+              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Receipt size={20} />} text="Billing" />
+              </button>
+              <hr className="my-3" />
+              <button 
+                onClick={handleLogout} 
+                className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}
+              >
+                <SidebarItem icon={<Settings size={20} />} text="Cerrar Sesión" />
+              </button>
+              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+              </button>
+            </Sidebar>
+          </div>
+        )}
+        <div className={`flex-1 p-8 ${loading ? 'cursor-wait' : ''} overflow-y-auto max-h-screen`}>
+          {renderPage()}
+        </div>
       </div>
-      <div className={`flex-1 p-8 ${loading ? 'cursor-wait' : ''} overflow-y-auto max-h-screen`}>
-        {renderPage()}
-      </div>
-    </div>
+    </AuthProvider>
   );
 }
 
