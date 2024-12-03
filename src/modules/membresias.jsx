@@ -78,9 +78,6 @@ function Membresias({loading, setLoading}) {
         setConfirmar(state)
     }
 
-    const changeNuevo = (state) => {
-        setNuevo(state)
-    }
 
     const changeUpdate = (state, id, idClienteMembresia, nombre) => {
         setAsignar(state)

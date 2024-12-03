@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake } from "lucide-react";
@@ -9,6 +10,7 @@ import Instructores from "./modules/instructores";
 import Plan from "./modules/planes";
 import Membresias from "./modules/membresias";
 import Login from "./modules/Login";
+import Asistencias from "./modules/asistencias.jsx";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -52,6 +54,8 @@ function App() {
         return <Plan loading={loading} setLoading={setLoading}/>
       case 'membresias':
         return <Membresias loading={loading} setLoading={setLoading}/>
+      case 'asistencias':
+        return <Asistencias loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -68,39 +72,52 @@ function App() {
         {isLoggedIn && (
           <div>
             <Sidebar>
-              <button onClick={() => navigateTo('inicio')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<LayoutDashboard size={20} />} text="Inicio"/>
+              <button onClick={() => navigateTo('inicio')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<LayoutDashboard size={20}/>} text="Inicio"/>
               </button>
-              <button onClick={() => navigateTo('clientes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<UserCircle size={20} />} text="Clientes" />
+              <button onClick={() => navigateTo('clientes')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<UserCircle size={20}/>} text="Clientes"/>
               </button>
-              <button onClick={() => navigateTo('instructores')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<PersonStanding size={20} />} text="Instructores"/>
+              <button onClick={() => navigateTo('instructores')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<PersonStanding size={20}/>} text="Instructores"/>
               </button>
-              <button onClick={() => navigateTo('inventario')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<Boxes size={20} />} text="Inventario" />
+              <button onClick={() => navigateTo('inventario')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Boxes size={20}/>} text="Inventario"/>
               </button>
-              <button onClick={() => navigateTo('planes')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<BookText size={20} />} text="Planes" />
+              <button onClick={() => navigateTo('planes')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<BookText size={20}/>} text="Planes"/>
               </button>
-              <button onClick={() => navigateTo('membresias')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<Handshake size={20} />} text="Membresias" />
+              <button onClick={() => navigateTo('membresias')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Handshake size={20}/>} text="Membresias"/>
               </button>
-              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
+              <button onClick={() => navigateTo('asistencias')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Handshake size={20}/>} text="Asistencias"/>
               </button>
-              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<Receipt size={20} />} text="Billing" />
+              <button
+                  className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<BarChart3 size={20}/>} text="Analytics"/>
               </button>
-              <hr className="my-3" />
-              <button 
-                onClick={handleLogout} 
-                className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}
+              <button
+                  className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Receipt size={20}/>} text="Billing"/>
+              </button>
+              <hr className="my-3"/>
+              <button
+                  onClick={handleLogout}
+                  className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}
               >
-                <SidebarItem icon={<Settings size={20} />} text="Cerrar Sesión" />
+                <SidebarItem icon={<Settings size={20}/>} text="Cerrar Sesión"/>
               </button>
-              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
+              <button
+                  className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<LifeBuoy size={20}/>} text="Help"/>
               </button>
             </Sidebar>
           </div>
