@@ -16,7 +16,8 @@ function Asistencias({loading, setLoading}) {
     const [idAsistencia, setIdAsistencia] = useState("");
     const [clientes, setClientes] = useState(null);
     const [entradas, setEntradas] = useState(false);
-
+    const [membresia, setMembresia] = useState(null)
+ 
     const fetchAPI = async () => {
         try {
             setLoading(true)
@@ -111,24 +112,52 @@ function Asistencias({loading, setLoading}) {
     const agregar = async () => {
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/asistencias`,{
-                ID_Cliente: clientes.ID_Cliente,
-                FechaAsistencia: obtenerFechaActual(),
-                Hora_Entrada: obtenerHoraActual(),
-                Hora_Salida: "-"
-            });
-            if (result.data.message) {
-                setMensaje(result.data.message)
+            const result = await axios.get(`http://localhost:5001/api/membresias/${clientes.ID_Cliente}`);
+            if (result.data.error) {
                 setAlert1(true)
-                fetchAPI()
-            } else if (result.data.error) {
                 setMensaje(result.data.error)
-                setAlert1(true)
+            } else {
+                setMembresia(result.data)
+                setAlert1(false)
             }
         } catch(e) {
             console.log('hubo un error :(')
         } finally {
             setLoading(false)
+        }
+
+        if (membresia.Estado == 'Inactiva') {
+                    setMensaje(`El cliente ${clientes.Nombre} ${clientes.Apellido} tiene la membresia vencida`)
+                    setAlert1(true)
+        }
+
+        if (membresia.Estado == null) {
+            setMensaje(`El cliente ${clientes.Nombre} ${clientes.Apellido} no tiene asignada una membresia`)
+            setAlert1(true)
+        }
+
+        if (membresia.Estado == 'Activa') {
+            try {
+                setLoading(true)
+                const result = await axios.post(`http://localhost:5001/api/asistencias`,{
+                    ID_Cliente: clientes.ID_Cliente,
+                    FechaAsistencia: obtenerFechaActual(),
+                    Hora_Entrada: obtenerHoraActual(),
+                    Hora_Salida: "-"
+                });
+                if (result.data.message) {
+                    setMensaje(result.data.message)
+                    setAlert1(true)
+                    fetchAPI()
+                } else if (result.data.error) {
+                    setMensaje(result.data.error)
+                    setAlert1(true)
+                }
+            } catch(e) {
+                console.log('hubo un error :(')
+            } finally {
+                setLoading(false)
+            }
         }
         setEntradas(false)
     }

@@ -1,4 +1,19 @@
+import React, { useEffect } from 'react';
+
 export default function Alert({ alert1, mensaje, change }) {
+    useEffect(() => {
+        // Only set up the timeout if the alert is visible
+        if (alert1) {
+            const timer = setTimeout(() => {
+                // Automatically close the alert after 5 seconds
+                change();
+            }, 5000);
+
+            // Clean up the timer if the component unmounts or alert changes
+            return () => clearTimeout(timer);
+        }
+    }, [alert1, change]);
+
     if (alert1) {
         return (
             <div role="alert" className="mb-4 relative p-4 text-sm text-white bg-indigo-500 rounded-lg shadow-lg flex justify-between items-center w-11/12 transition-all transform hover:scale-105">
@@ -26,6 +41,6 @@ export default function Alert({ alert1, mensaje, change }) {
             </div>
         );
     } else {
-        return <></>;
+        return null;
     }
 }
