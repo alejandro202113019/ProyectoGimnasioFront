@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Asignar({ asignar, changeUpdate, data, planes, nombre, id, idClienteMembresia, agregar, actualizar }) {
+export default function Asignar({ asignar, setAsignar, changeUpdate, data, planes, nombre, id, idClienteMembresia, agregar, actualizar }) {
     const [nombrePlan, setNombrePlan] = useState(planes?.length ? planes[0].Nombre_Plan : "");
 
     // Funciones reutilizables
@@ -95,7 +95,7 @@ export default function Asignar({ asignar, changeUpdate, data, planes, nombre, i
                 {/* Botones de Acción */}
                 <div className="flex justify-between">
                     <button
-                        onClick={() => changeUpdate(false)}
+                        onClick={() => setAsignar(false)}
                         type="button"
                         className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-transform transform hover:scale-105"
                     >

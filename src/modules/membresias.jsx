@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import TablaMembresias from "./components/tabla_membresias";
 import Alert from "./components/alert";
-import Confirmation from "./components/confirmacion";
+import ConfirmationPago from "./components/confirmacionPago";
 import Asignar from "./components/asignar_membresia";
 import Update from "./components/actualizar_cliente";
 
@@ -24,6 +24,10 @@ function Membresias({loading, setLoading}) {
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [idClienteMembresia, setIdClienteMembresia] = useState('');
+    const [tipoPago, setTipoPago] = useState('')
+    const [monto, setMonto] = useState('')
+    const [idMembresia, setIdMembresia] = useState('')
+    const [fechaFin, setFechaFin] = useState('')
 
     const fetchAPI = async () => {
         try {
@@ -82,11 +86,24 @@ function Membresias({loading, setLoading}) {
         setNuevo(state)
     }
 
-    const changeUpdate = (state, id, idClienteMembresia, nombre) => {
+    const changeUpdate = (state, id, idClienteMembresia, nombre, monto, idMembresia, fecha_fin) => {
+        setConfirmar(state)
+        setIdCliente(id)
+        setIdClienteMembresia(idClienteMembresia)
+        setNombre(nombre)
+        setMonto(monto)
+        setIdMembresia(idMembresia)
+        setFechaFin(fecha_fin)
+    }
+
+    const changeUpdateAsignar = (state, id, idClienteMembresia, nombre, monto, idMembresia) => {
+        console.log(state + ' ' + id + ' ' + idClienteMembresia + ' ' + nombre + ' ' + monto + ' ' + idMembresia)
         setAsignar(state)
         setIdCliente(id)
         setIdClienteMembresia(idClienteMembresia)
         setNombre(nombre)
+        setMonto(monto)
+        setIdMembresia(idMembresia)
     }
 
     const buscar = async (id) => {
@@ -141,7 +158,34 @@ function Membresias({loading, setLoading}) {
         setConfirmar(false)
     }
 
-    const agregar = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
+    const agregar = async () => {
+        actualizar()
+        try {
+            setLoading(true)
+            const result = await axios.post(`http://localhost:5001/api/pagos`,{
+                Fecha_Pago: obtenerFechaActual(),
+                ID_Membresia: idMembresia,
+                ID_Pago: idClente,
+                Metodo_Pago: tipoPago,
+                Monto: parseFloat(monto)
+            });
+            if (result.data.message) {
+                setMensaje(result.data.message)
+                setAlert1(true)
+                fetchAPI()
+            } else if (result.data.error) {
+                setMensaje(result.data.error)
+                setAlert1(true)
+            }
+        } catch(e) {
+            console.log('hubo un error :(')
+        } finally {
+            setLoading(false)
+        }
+        setConfirmar(false)
+    }
+
+    const agregarMembresia = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
         try {
             setLoading(true)
             const result = await axios.post(`http://localhost:5001/api/membresias`,{
@@ -168,16 +212,16 @@ function Membresias({loading, setLoading}) {
         setAsignar(false)
     }
 
-    const actualizar = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
+    const actualizar = async () => {
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/membresias/${id}`,{
-                Estado: estado,
-                Fecha_Fin: fecha_fin,
-                Fecha_Inicio: fecha_inicio,
-                ID_Cliente: parseInt(id),
-                ID_Membresia: parseInt(id),
-                ID_Plan: id_plan === null ? 2 : parseInt(id_plan)
+            const result = await axios.put(`http://localhost:5001/api/membresias/${idMembresia}`,{
+                Estado: 'e',
+                Fecha_Fin: fechaFin,
+                Fecha_Inicio: 'e',
+                ID_Cliente: 'e',
+                ID_Membresia: 'e',
+                ID_Plan: 'e'
             });
             if (result.data.message) {
                 setMensaje(result.data.message)
@@ -192,22 +236,30 @@ function Membresias({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setAsignar(false)
     }
+
+    const obtenerFechaActual = () => {
+        const hoy = new Date();
+        const year = hoy.getFullYear();
+        const month = String(hoy.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+        const day = String(hoy.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
     return (
 
         <>
-            <Confirmation confirmar={confirmar} changeConfirmation={chageConfirmation} eliminar={eliminar}/>
+            <ConfirmationPago confirmar={confirmar} tipoPago={tipoPago} setTipoPago={setTipoPago} changeConfirmation={chageConfirmation} agregar={agregar}/>
             <Asignar
                 asignar={asignar}
+                setAsignar={setAsignar}
                 data={data}
                 planes={planes}
                 changeUpdate={changeUpdate}
                 nombre={nombre}
                 id={idClente}
                 idClienteMembresia={idClienteMembresia}
-                agregar={agregar}
+                agregar={agregarMembresia}
                 actualizar={actualizar}/>
             <Update modificar={modificar} setModificar={setModificar} actualizar={actualizar} valor1={valor1}
                     valor2={valor2} nombre={nombre}
@@ -243,7 +295,7 @@ function Membresias({loading, setLoading}) {
             <hr className="my-3"/>
             <div>
                 <TablaMembresias data={data} eliminar={eliminar} chageConfirmation={chageConfirmation}
-                                 changeUpdate={changeUpdate}/>
+                                 changeUpdate={changeUpdate} changeUpdateAsignar={changeUpdateAsignar} planes={planes}/>
             </div>
         </>
     )

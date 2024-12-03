@@ -34,9 +34,6 @@ export default function ActualizarEquipo({
                             id="Estado"
                             className="p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                         >
-                            <option value="" disabled>
-                                Seleccionar estado
-                            </option>
                             <option value="Activo">Activo</option>
                             <option value="Mantenimiento">Mantenimiento</option>
                             <option value="Inactivo">Inactivo</option>

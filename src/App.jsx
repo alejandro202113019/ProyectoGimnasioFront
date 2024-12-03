@@ -9,6 +9,7 @@ import Instructores from "./modules/instructores";
 import Plan from "./modules/planes";
 import Membresias from "./modules/membresias";
 import Login from "./modules/Login";
+import Pago from "./modules/pagos";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -52,6 +53,8 @@ function App() {
         return <Plan loading={loading} setLoading={setLoading}/>
       case 'membresias':
         return <Membresias loading={loading} setLoading={setLoading}/>
+      case 'pagos':
+        return <Pago loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -89,8 +92,8 @@ function App() {
               <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<BarChart3 size={20} />} text="Analytics" />
               </button>
-              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<Receipt size={20} />} text="Billing" />
+              <button onClick={() => navigateTo('pagos')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Receipt size={20} />} text="Pagos" />
               </button>
               <hr className="my-3" />
               <button 
