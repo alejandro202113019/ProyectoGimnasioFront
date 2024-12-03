@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
-import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake } from "lucide-react";
+import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake, ListCollapse } from "lucide-react";
 import Sidebar from "./modules/sidebar";
 import { SidebarItem } from "./modules/sidebar";
 import Clientes from "./modules/clientes";
@@ -10,6 +10,8 @@ import Instructores from "./modules/instructores";
 import Plan from "./modules/planes";
 import Membresias from "./modules/membresias";
 import Login from "./modules/Login";
+import Pago from "./modules/pagos";
+import Asistencias from "./modules/asistencias";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -53,6 +55,10 @@ function App() {
         return <Plan loading={loading} setLoading={setLoading}/>
       case 'membresias':
         return <Membresias loading={loading} setLoading={setLoading}/>
+      case 'pagos':
+        return <Pago loading={loading} setLoading={setLoading}/>
+      case 'asistencias':
+        return <Asistencias loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -77,6 +83,10 @@ function App() {
                       className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<UserCircle size={20}/>} text="Clientes"/>
               </button>
+              <button onClick={() => navigateTo('asistencias')}
+                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<ListCollapse size={20}/>} text="Asistencias"/>
+              </button>
               <button onClick={() => navigateTo('instructores')}
                       className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<PersonStanding size={20}/>} text="Instructores"/>
@@ -93,16 +103,12 @@ function App() {
                       className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<Handshake size={20}/>} text="Membresias"/>
               </button>
-              <button onClick={() => navigateTo('asistencias')}
-                      className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<Handshake size={20}/>} text="Asistencias"/>
+              <button onClick={() => navigateTo('pagos')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Receipt size={20} />} text="Pagos" />
               </button>
               <button
                   className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<BarChart3 size={20}/>} text="Analytics"/>
-              </button>
-              <button className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<Receipt size={20} />} text="Billing" />
               </button>
               <hr className="my-3"/>
               <button
