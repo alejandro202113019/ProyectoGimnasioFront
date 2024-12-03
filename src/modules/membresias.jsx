@@ -24,7 +24,7 @@ function Membresias({loading, setLoading}) {
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [idClienteMembresia, setIdClienteMembresia] = useState('');
-    const [tipoPago, setTipoPago] = useState('')
+    const [tipoPago, setTipoPago] = useState('Efectivo')
     const [monto, setMonto] = useState('')
     const [idMembresia, setIdMembresia] = useState('')
     const [fechaFin, setFechaFin] = useState('')
@@ -97,7 +97,6 @@ function Membresias({loading, setLoading}) {
     }
 
     const changeUpdateAsignar = (state, id, idClienteMembresia, nombre, monto, idMembresia) => {
-        console.log(state + ' ' + id + ' ' + idClienteMembresia + ' ' + nombre + ' ' + monto + ' ' + idMembresia)
         setAsignar(state)
         setIdCliente(id)
         setIdClienteMembresia(idClienteMembresia)
@@ -145,7 +144,6 @@ function Membresias({loading, setLoading}) {
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
-                fetchAPI()
             } else if (result.data.error) {
                 setMensaje(result.data.error)
                 setAlert1(true)
@@ -153,6 +151,7 @@ function Membresias({loading, setLoading}) {
         } catch(e) {
             console.log('hubo un error :(')
         } finally {
+            fetchAPI()
             setLoading(false)
         }
         setConfirmar(false)
@@ -172,7 +171,6 @@ function Membresias({loading, setLoading}) {
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
-                fetchAPI()
             } else if (result.data.error) {
                 setMensaje(result.data.error)
                 setAlert1(true)
@@ -180,6 +178,7 @@ function Membresias({loading, setLoading}) {
         } catch(e) {
             console.log('hubo un error :(')
         } finally {
+            fetchAPI()
             setLoading(false)
         }
         setConfirmar(false)
@@ -199,14 +198,14 @@ function Membresias({loading, setLoading}) {
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
-                fetchAPI()
             } else if (result.data.error) {
                 setMensaje(result.data.error)
                 setAlert1(true)
             }
         } catch(e) {
-            console.log('hubo un error :(')
+            console.log(e)
         } finally {
+            fetchAPI()
             setLoading(false)
         }
         setAsignar(false)
@@ -215,18 +214,17 @@ function Membresias({loading, setLoading}) {
     const actualizar = async () => {
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/membresias/${idMembresia}`,{
-                Estado: 'e',
+            const result = await axios.put(`http://localhost:5001/api/membresias/${idClente}`,{
+                Estado: 'null',
                 Fecha_Fin: fechaFin,
-                Fecha_Inicio: 'e',
-                ID_Cliente: 'e',
-                ID_Membresia: 'e',
-                ID_Plan: 'e'
+                Fecha_Inicio: 'null',
+                ID_Cliente: 'null',
+                ID_Membresia: 'null',
+                ID_Plan: 'null'
             });
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
-                fetchAPI()
             } else if (result.data.error) {
                 setMensaje(result.data.error)
                 setAlert1(true)
@@ -234,8 +232,36 @@ function Membresias({loading, setLoading}) {
         } catch(e) {
             console.log('hubo un error :(')
         } finally {
+            fetchAPI()
             setLoading(false)
         }
+    }
+
+    const actualizarMembresia = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
+        try {
+            setLoading(true)
+            const result = await axios.put(`http://localhost:5001/api/membresias/${id}`,{
+                Estado: estado,
+                Fecha_Fin: fecha_fin,
+                Fecha_Inicio: fecha_inicio,
+                ID_Cliente: parseInt(id),
+                ID_Membresia: parseInt(id),
+                ID_Plan: id_plan === null ? 2 : parseInt(id_plan)
+            });
+            if (result.data.message) {
+                setMensaje(result.data.message)
+                setAlert1(true)
+            } else if (result.data.error) {
+                setMensaje(result.data.error)
+                setAlert1(true)
+            }
+        } catch(e) {
+            console.log(e)
+        } finally {
+            fetchAPI()
+            setLoading(false)
+        }
+        setAsignar(false)
     }
 
     const obtenerFechaActual = () => {
@@ -260,7 +286,7 @@ function Membresias({loading, setLoading}) {
                 id={idClente}
                 idClienteMembresia={idClienteMembresia}
                 agregar={agregarMembresia}
-                actualizar={actualizar}/>
+                actualizar={actualizarMembresia}/>
             <Update modificar={modificar} setModificar={setModificar} actualizar={actualizar} valor1={valor1}
                     valor2={valor2} nombre={nombre}
                     apellido={apellido} handleChange1={handleInputChange1} handleChange2={handleInputChange2}

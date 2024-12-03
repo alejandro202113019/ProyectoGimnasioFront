@@ -15,7 +15,7 @@ export default function TablaPagos({data, chageConfirmation, changeUpdate}) {
                     <tbody>
                         {
                             data.map((equipo) => (
-                                <tr key={equipo.ID_Equipo}>
+                                <tr key={equipo.ID_Pago}>
                                     <td className="border border-slate-700 text-center">{equipo.ID_Cliente}</td>
                                     <td className="border border-slate-700 text-center">{equipo.Nombre_Completo_Cliente}</td>
                                     <td className="border border-slate-700 text-center">{equipo.Nombre_Plan}</td>
@@ -42,7 +42,7 @@ export default function TablaPagos({data, chageConfirmation, changeUpdate}) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr key={data.ID_Equipo}>
+                        <tr key={data.ID_Pago}>
                             <td className="border border-slate-700 text-center">{data.ID_Cliente}</td>
                             <td className="border border-slate-700 text-center">{data.Nombre_Completo_Cliente}</td>
                             <td className="border border-slate-700 text-center">{data.Nombre_Plan}</td>

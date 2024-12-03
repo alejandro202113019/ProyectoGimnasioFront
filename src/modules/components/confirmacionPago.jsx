@@ -1,4 +1,5 @@
 export default function ConfirmationPago({ confirmar, changeConfirmation, agregar, tipoPago, setTipoPago }) {
+
     if (!confirmar) {
         return null;
     }
