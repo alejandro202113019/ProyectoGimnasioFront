@@ -12,6 +12,8 @@ import Membresias from "./modules/membresias";
 import Login from "./modules/Login";
 import Pago from "./modules/pagos";
 import Asistencias from "./modules/asistencias";
+import Gastos from "./modules/Gastos";
+
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -59,6 +61,9 @@ function App() {
         return <Pago loading={loading} setLoading={setLoading}/>
       case 'asistencias':
         return <Asistencias loading={loading} setLoading={setLoading}/>
+      case "gastos":
+          return <Gastos loading={loading} setLoading={setLoading} />;
+          
       default:
         return (
           <>
@@ -106,6 +111,11 @@ function App() {
               <button onClick={() => navigateTo('pagos')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<Receipt size={20} />} text="Pagos" />
               </button>
+              <button onClick={() => navigateTo("gastos")}
+                 className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Receipt size={20} />} text="Gastos" />
+              </button>
+
               <button
                   className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<BarChart3 size={20}/>} text="Analytics"/>
@@ -121,6 +131,7 @@ function App() {
                   className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<LifeBuoy size={20}/>} text="Help"/>
               </button>
+                
             </Sidebar>
           </div>
         )}
