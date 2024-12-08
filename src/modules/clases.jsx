@@ -74,8 +74,8 @@ function Clases({loading, setLoading}) {
         setEstado(estado)
     }
 
-    const AgregarClaseHorario = (Hora_inicio, Hora_fin, dise_semana, capacidad, duracion, id_instructor, nombre_clase) => {
-        agregarClase(capacidad, duracion, id_instructor, nombre_clase, Hora_inicio, Hora_fin, dise_semana)
+    const AgregarClaseHorario = (Hora_inicio, Hora_fin, dise_semana, capacidad, id_instructor, nombre_clase) => {
+        agregarClase(capacidad, id_instructor, nombre_clase, Hora_inicio, Hora_fin, dise_semana)
     }
 
     const buscar = async (id) => {
@@ -129,7 +129,7 @@ function Clases({loading, setLoading}) {
         }
     }
 
-    const agregarClase = async (capacidad, duracion, id_instructor, nombre_clase, Hora_inicio, Hora_fin, dise_semana) => {
+    const agregarClase = async (capacidad, id_instructor, nombre_clase, Hora_inicio, Hora_fin, dise_semana) => {
         setNuevo(false)
         try {
             setLoading(true)

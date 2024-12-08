@@ -39,13 +39,12 @@ const CrearClase = ({ nuevaClase, setNuevaClase, instructores, agregar }) => {
 
   // Verificar si todos los campos están llenos
   useEffect(() => {
-    const { Nombre_Clase, Dia_Semana, Hora_Inicio, Hora_Fin, Duracion, Capacidad_Maxima, Nombre_Instructor } = formData;
+    const { Nombre_Clase, Dia_Semana, Hora_Inicio, Hora_Fin, Capacidad_Maxima, Nombre_Instructor } = formData;
     setIsFormValid(
       Nombre_Clase &&
       Dia_Semana &&
       Hora_Inicio &&
       Hora_Fin &&
-      Duracion &&
       Capacidad_Maxima &&
       Nombre_Instructor
     );
@@ -63,7 +62,6 @@ const CrearClase = ({ nuevaClase, setNuevaClase, instructores, agregar }) => {
       formData.Hora_Fin,
       formData.Dia_Semana,
       formData.Capacidad_Maxima,
-      formData.Duracion,
       instructorId,
       formData.Nombre_Clase
     );
