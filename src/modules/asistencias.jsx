@@ -90,6 +90,7 @@ function Asistencias({loading, setLoading}) {
     }
 
     const eliminar = async () => {
+        setConfirmar(false)
         try {
             setLoading(true)
             const result = await axios.delete(`http://localhost:5001/api/asistencias/${idAsistencia}`);
@@ -106,10 +107,10 @@ function Asistencias({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setConfirmar(false)
     }
 
     const agregar = async () => {
+        setEntradas(false)
         try {
             setLoading(true);
             const result = await axios.get(`http://localhost:5001/api/membresias/${clientes.ID_Cliente}`);
@@ -152,7 +153,6 @@ function Asistencias({loading, setLoading}) {
         } finally {
             setLoading(false);
         }
-        setEntradas(false)
     }
 
     const obtenerFechaActual = () => {
@@ -170,6 +170,7 @@ function Asistencias({loading, setLoading}) {
     }
 
     const actualizar = async () => {
+        setConfirmarSalida(false)
         try {
             setLoading(true)
             const result = await axios.put(`http://localhost:5001/api/asistencias/${idAsistencia}`,{
@@ -193,7 +194,6 @@ function Asistencias({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setConfirmarSalida(false)
     }
 
     const buscarCliente = async (id) => {

@@ -110,6 +110,7 @@ function Clientes({loading, setLoading}) {
     }
 
     const eliminar = async () => {
+        setConfirmar(false)
         try {
             setLoading(true)
             const result = await axios.delete(`http://localhost:5001/api/clientes/${idClente}`);
@@ -126,10 +127,10 @@ function Clientes({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setConfirmar(false)
     }
 
     const agregar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
+        setNuevo(false)
         try {
             setLoading(true)
             const result = await axios.post(`http://localhost:5001/api/clientes`,{
@@ -153,10 +154,10 @@ function Clientes({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setNuevo(false)
     }
 
     const actualizar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
+        setModificar(false)
         try {
             setLoading(true)
             const result = await axios.put(`http://localhost:5001/api/clientes/${documento}`,{
@@ -179,7 +180,6 @@ function Clientes({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setModificar(false)
     }
 
     return (

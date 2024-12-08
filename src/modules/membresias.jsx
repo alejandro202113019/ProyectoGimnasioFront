@@ -135,6 +135,7 @@ function Membresias({loading, setLoading}) {
     }
 
     const eliminar = async () => {
+        setConfirmar(false)
         try {
             setLoading(true)
             const result = await axios.delete(`http://localhost:5001/api/membresia/${idClente}`);
@@ -151,10 +152,10 @@ function Membresias({loading, setLoading}) {
             fetchAPI()
             setLoading(false)
         }
-        setConfirmar(false)
     }
 
     const agregar = async () => {
+        setConfirmar(false)
         actualizar()
         try {
             setLoading(true)
@@ -178,10 +179,10 @@ function Membresias({loading, setLoading}) {
             fetchAPI()
             setLoading(false)
         }
-        setConfirmar(false)
     }
 
     const agregarMembresia = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
+        setAsignar(false)
         try {
             setLoading(true)
             const result = await axios.post(`http://localhost:5001/api/membresias`,{
@@ -205,7 +206,6 @@ function Membresias({loading, setLoading}) {
             fetchAPI()
             setLoading(false)
         }
-        setAsignar(false)
     }
 
     const actualizar = async () => {
@@ -235,6 +235,7 @@ function Membresias({loading, setLoading}) {
     }
 
     const actualizarMembresia = async (estado, fecha_inicio, fecha_fin, id, id_plan) => {
+        setAsignar(false)
         try {
             setLoading(true)
             const result = await axios.put(`http://localhost:5001/api/membresias/${id}`,{
@@ -258,7 +259,6 @@ function Membresias({loading, setLoading}) {
             fetchAPI()
             setLoading(false)
         }
-        setAsignar(false)
     }
 
     const obtenerFechaActual = () => {

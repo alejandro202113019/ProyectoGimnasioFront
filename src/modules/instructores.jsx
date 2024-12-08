@@ -110,6 +110,7 @@ function Instructores({loading, setLoading}) {
     }
 
     const eliminar = async () => {
+        setConfirmar(false)
         console.log(idInstructor)
         try {
             setLoading(true)
@@ -127,10 +128,10 @@ function Instructores({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setConfirmar(false)
     }
 
     const agregar = async (nombre, apellido, especialidad, documento, correo, telefono) => {
+        setNuevo(false)
         try {
             setLoading(true)
             const result = await axios.post(`http://localhost:5001/api/instructores`,{
@@ -154,10 +155,10 @@ function Instructores({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setNuevo(false)
     }
 
     const actualizar = async (nombre, apellido, especialidad, documento, correo, telefono) => {
+        setModificar(false)
         try {
             setLoading(true)
             const result = await axios.put(`http://localhost:5001/api/instructores/${documento}`, {
@@ -180,7 +181,6 @@ function Instructores({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setModificar(false)
     }
 
     return (

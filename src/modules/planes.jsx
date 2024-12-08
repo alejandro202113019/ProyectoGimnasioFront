@@ -74,6 +74,7 @@ function Plan({loading, setLoading}) {
     }
 
     const buscar = async (id) => {
+        setLoading(false)
         if (id === "") {
             try {
                 setLoading(true)
@@ -99,12 +100,12 @@ function Plan({loading, setLoading}) {
             } catch(e) {
                  console.log('hubo un error :(')
             } finally {
-                setLoading(false)
             }
         }
     }
 
     const eliminar = async () => {
+        setConfirmar(false)
         try {
             setLoading(true)
             const result = await axios.delete(`http://localhost:5001/api/planes/${idPlan}`);
@@ -121,10 +122,10 @@ function Plan({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setConfirmar(false)
     }
 
     const agregar = async (nombre, descripcion, duracion, precio) => {
+        setNuevo(false)
         try {
             setLoading(true)
             const result = await axios.post(`http://localhost:5001/api/planes`,{
@@ -146,10 +147,10 @@ function Plan({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setNuevo(false)
     }
 
     const actualizar = async (id, nombre, descripcion, duracion, precio) => {
+        setModificar(false)
         try {
             setLoading(true)
             const result = await axios.put(`http://localhost:5001/api/planes/${id}`,{
@@ -172,7 +173,6 @@ function Plan({loading, setLoading}) {
         } finally {
             setLoading(false)
         }
-        setModificar(false)
     }
 
     return (

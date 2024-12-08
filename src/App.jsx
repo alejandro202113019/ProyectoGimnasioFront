@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
-import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake, ListCollapse } from "lucide-react";
+import { LifeBuoy, Receipt, Boxes, UserCircle, BarChart3, LayoutDashboard, Settings, PersonStanding, BookText, Handshake, ListCollapse, PanelBottomDashed, AlarmClock } from "lucide-react";
 import Sidebar from "./modules/sidebar";
 import { SidebarItem } from "./modules/sidebar";
 import Clientes from "./modules/clientes";
@@ -12,6 +12,8 @@ import Membresias from "./modules/membresias";
 import Login from "./modules/Login";
 import Pago from "./modules/pagos";
 import Asistencias from "./modules/asistencias";
+import Horario from "./modules/horario";
+import Clases from "./modules/clases";
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -59,6 +61,10 @@ function App() {
         return <Pago loading={loading} setLoading={setLoading}/>
       case 'asistencias':
         return <Asistencias loading={loading} setLoading={setLoading}/>
+      case 'horarios':
+        return <Horario loading={loading} setLoading={setLoading}/>
+      case 'clases':
+        return <Clases loading={loading} setLoading={setLoading}/>
       default:
         return (
           <>
@@ -90,6 +96,12 @@ function App() {
               <button onClick={() => navigateTo('instructores')}
                       className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<PersonStanding size={20}/>} text="Instructores"/>
+              </button>
+              <button onClick={() => navigateTo('horarios')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<PanelBottomDashed size={20} />} text="Horario" />
+              </button>
+              <button onClick={() => navigateTo('clases')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<AlarmClock size={20} />} text="Clases" />
               </button>
               <button onClick={() => navigateTo('inventario')}
                       className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>

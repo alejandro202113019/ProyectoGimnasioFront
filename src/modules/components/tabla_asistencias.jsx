@@ -14,11 +14,11 @@ export default function TablaInventario({data, chageConfirmation, changeUpdate,c
                 </thead>
                 <tbody>
                 {
-                    data.map((plan) => (
+                    data.slice().reverse().map((plan) => (
                         <tr key={plan.ID_Asistencia}>
                             <td className="border border-slate-700 text-center">{plan.ID_Cliente}</td>
                             <td className="border border-slate-700 text-center">{plan.NombreCompleto}</td>
-                            <td className="border border-slate-700 text-center">{plan.FechaAsistencia}</td>
+                            <td className="border border-slate-700 text-center">{formatDate(plan.FechaAsistencia)}</td>
                             <td className="border border-slate-700 text-center">{plan.Hora_Entrada}</td>
                             <td className="border border-slate-700 text-center">{plan.Hora_Salida}</td>
                             <td className="border border-slate-700 grid grid-cols-1">
@@ -58,7 +58,7 @@ export default function TablaInventario({data, chageConfirmation, changeUpdate,c
                 <tr key={data.ID_Plan}>
                     <td className="border border-slate-700 text-center">{data.ID_Cliente}</td>
                     <td className="border border-slate-700 text-center">{data.NombreCompleto}</td>
-                    <td className="border border-slate-700 text-center">{data.FechaAsistencia}</td>
+                    <td className="border border-slate-700 text-center">{formatDate(data.FechaAsistencia)}</td>
                     <td className="border border-slate-700 text-center">{data.Hora_Entrada}</td>
                     <td className="border border-slate-700 text-center">{data.Hora_Salida}</td>
                     <td className="border border-slate-700 grid grid-cols-1">
@@ -84,4 +84,12 @@ export default function TablaInventario({data, chageConfirmation, changeUpdate,c
             <></>
         )
     }
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getUTCDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getUTCFullYear();
+    return `${day}/${month}/${year}`;
 }

@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import TablaInventario from "./components/tabla_inventario";
 import Alert from "./components/alert";
+import TablaClases from "./components/tabla_clases";
+import CrearClase from "./components/nueva_clase";
+import { setId } from "@material-tailwind/react/components/Tabs/TabsContext";
 import Confirmation from "./components/confirmacion";
-import NuevoEquipo from "./components/nuevo_equipo";
-import ActualizarEquipo from "./components/actualizar_equipo";
 
 
-function Inventario({loading, setLoading}) {
+function Clases({loading, setLoading}) {
     const [data, setData] = useState(null);
     const [alert1, setAlert1] = useState(false)
     const [mensaje, setMensaje] = useState("");
@@ -16,12 +16,13 @@ function Inventario({loading, setLoading}) {
     const [modificar, setModificar] = useState(false);
     const [idEquipo, setIdEquipo] = useState("");
     const [nombre, setNombre] = useState("");
-    const [estado, setEstado] = useState("");
+    const [idClase, setIdClase] = useState("");
+    const [instructores, setInstructores] = useState("")
 
     const fetchAPI = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/equipos');
+            const result = await axios.get('http://localhost:5001/api/clases');
             setData(result.data)
         } catch(e) {
             console.log('hubo un error :(')
@@ -30,8 +31,22 @@ function Inventario({loading, setLoading}) {
         }
     }
 
+    const fetchAPIInstructores = async () => {
+        try {
+            setLoading(true)
+            const result = await axios.get('http://localhost:5001/api/instructores');
+            setInstructores(result.data)
+        } catch(e) {
+            console.log('hubo un error :(')
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     useEffect(() => {
         fetchAPI()
+        fetchAPIInstructores()
     }, []);
 
     const handleInputChange = (event) => {
@@ -59,8 +74,11 @@ function Inventario({loading, setLoading}) {
         setEstado(estado)
     }
 
+    const AgregarClaseHorario = (Hora_inicio, Hora_fin, dise_semana, capacidad, duracion, id_instructor, nombre_clase) => {
+        agregarClase(capacidad, duracion, id_instructor, nombre_clase, Hora_inicio, Hora_fin, dise_semana)
+    }
+
     const buscar = async (id) => {
-        setLoading(false)
         if (id === "") {
             try {
                 setLoading(true)
@@ -86,6 +104,7 @@ function Inventario({loading, setLoading}) {
             } catch(e) {
                  console.log('hubo un error :(')
             } finally {
+                setLoading(false)
             }
         }
     }
@@ -94,7 +113,7 @@ function Inventario({loading, setLoading}) {
         setConfirmar(false)
         try {
             setLoading(true)
-            const result = await axios.delete(`http://localhost:5001/api/equipos/${idEquipo}`);
+            const result = await axios.delete(`http://localhost:5001/api/clases/${idClase}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -110,13 +129,41 @@ function Inventario({loading, setLoading}) {
         }
     }
 
-    const agregar = async (nombre, estado) => {
+    const agregarClase = async (capacidad, duracion, id_instructor, nombre_clase, Hora_inicio, Hora_fin, dise_semana) => {
         setNuevo(false)
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/equipos`,{
-                Nombre_Equipo: nombre,
-                Estado: estado
+            const result = await axios.post(`http://localhost:5001/api/clases`,{
+                Capacidad_Maxima: capacidad,
+                Duracion: 60,
+                ID_Instructor: id_instructor,
+                Nombre_Clase: nombre_clase
+            });
+            if (result.data.message) {
+                setMensaje(result.data.message)
+                setAlert1(true)
+                fetchAPI()
+            } else if (result.data.error) {
+                setMensaje(result.data.error)
+                setAlert1(true)
+            }
+        } catch(e) {
+            console.log('hubo un error :(')
+        } finally {
+            agregarHorario(Hora_inicio, Hora_fin, dise_semana)
+            setLoading(false)
+        }
+    }
+
+    const agregarHorario = async (hora_inicio, hora_fin, dia_semana) => {
+        setNuevo(false)
+        try {
+            setLoading(true)
+            const result = await axios.post(`http://localhost:5001/api/horarios`,{
+                Hora_Fin: hora_fin,
+                Hora_Inicio: hora_inicio,
+                ID_Clase: 21,
+                Dia_Semana: dia_semana
             });
             if (result.data.message) {
                 setMensaje(result.data.message)
@@ -158,49 +205,39 @@ function Inventario({loading, setLoading}) {
 
     return (
 
-        <>
+        <>  
             <Confirmation confirmar={confirmar} changeConfirmation={chageConfirmation} eliminar={eliminar}/>
-            <NuevoEquipo agregar={agregar} nuevo={nuevo} changeNuevo={changeNuevo} handleChange={handleInputChange}
-                         id={idEquipo}/>
-            <ActualizarEquipo setModificar={setModificar} modificar={modificar} id={idEquipo} nombre={nombre}
-                              setNombre={setNombre} estado={estado} setEstado={setEstado} actualizar={actualizar}/>
+            <CrearClase
+                nuevaClase={nuevo} 
+                setNuevaClase={changeNuevo} 
+                instructores={instructores} 
+                agregar={AgregarClaseHorario}></CrearClase>
             <div className="fixed flex pb-0 min-h-28 w-5/12 right-0">
                 <Alert alert1={alert1} mensaje={mensaje} change={chageAlert}/>
             </div>
 
             <div className="flex items-center text-4xl font-semibold text-indigo-700 mb-6">
                 <i className="fas fa-warehouse mr-3 text-5xl"></i>
-                <span>GESTIÓN INVENTARIO/EQUIPOS</span>
+                <span>GESTION DE CLASES</span>
             </div>
 
             <hr className="border-t-2 border-indigo-400 my-4"/>
 
-
             <div className={`flex grid grid-cols-4 grid-rows-1 gap-5 pt-25 pb-4 w-full`}>
-                <div className="">
-                    <input id="busqueda" type="text" placeholder="Buscar por ID"
-                           className="ring-2 ring-blue-500 min-w-full min-h-9 px-3 py-2 rounded-md" onChange={handleInputChange}></input>
-                </div>
-                <div className="flex justify-start">
-                    <button disabled={loading} type="button" className={`rounded-xl cursor-pointer bg-indigo-400 m-0.5 text-white transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 min-w-40 min-h-8 ${loading ? 'cursor-wait opacity-50 hover:translate-y-0 hover:scale-100' : 'cursor-pointer'}`}
-                            onClick={
-                                () => buscar(document.getElementById('busqueda').value)
-                            }><i className="fas fa-search"></i> BUSCAR
-                    </button>
-                </div>
                 <div className="flex justify-end col-end-5">
-                    <button onClick={() => changeNuevo(true)} type="button" className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
+                    <button onClick={() => changeNuevo(true)} type="button"
+                            className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1">
                         <i className="fas fa-plus"></i> NUEVO
                     </button>
                 </div>
             </div>
+
             <div>
-                <TablaInventario data={data} eliminar={eliminar} chageConfirmation={chageConfirmation}
-                                 changeUpdate={changeUpdate}/>
+                <TablaClases datos={data} setConfirmar={setConfirmar} setId={setIdClase}/>
             </div>
         </>
     )
 
 }
 
-export default Inventario
+export default Clases
