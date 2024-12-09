@@ -218,10 +218,10 @@ function Instructores() {
             <i className="fas fa-search"></i> BUSCAR
           </button>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end col-end-5">
           <button
             onClick={() => changeNuevo(true)}
-            className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out"
+            className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-sm transition duration-200 ease-in-out m-1"
           >
             <i className="fas fa-plus"></i> NUEVO
           </button>
