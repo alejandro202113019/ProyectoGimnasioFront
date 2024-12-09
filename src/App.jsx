@@ -14,6 +14,9 @@ import Pago from "./modules/pagos";
 import Asistencias from "./modules/asistencias";
 import Horario from "./modules/horario";
 import Clases from "./modules/clases";
+import Gastos from "./modules/Gastos";
+import Finanzas from "./modules/Finanzas";
+
 
 function App() {
   const [currentPage, setCurrentPage] = useState('inicio');
@@ -65,6 +68,11 @@ function App() {
         return <Horario loading={loading} setLoading={setLoading}/>
       case 'clases':
         return <Clases loading={loading} setLoading={setLoading}/>
+      case "gastos":
+        return <Gastos loading={loading} setLoading={setLoading} />;
+      case 'finanzas':
+        return <Finanzas />;
+              
       default:
         return (
           <>
@@ -118,10 +126,15 @@ function App() {
               <button onClick={() => navigateTo('pagos')} className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<Receipt size={20} />} text="Pagos" />
               </button>
-              <button
-                  className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
-                <SidebarItem icon={<BarChart3 size={20}/>} text="Analytics"/>
+              <button onClick={() => navigateTo("gastos")}
+                 className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<Receipt size={20} />} text="Gastos" />
               </button>
+              <button onClick={() => navigateTo('finanzas')}
+                  className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
+                <SidebarItem icon={<BarChart3 size={20} />} text="Finanzas" />
+              </button> 
+          
               <hr className="my-3"/>
               <button
                   onClick={handleLogout}
@@ -133,6 +146,7 @@ function App() {
                   className={`max-h-10 transition ease-in-out delay-60 hover:-translate-y-1 hover:scale-95 duration-60 text-left`}>
                 <SidebarItem icon={<LifeBuoy size={20}/>} text="Help"/>
               </button>
+              
             </Sidebar>
           </div>
         )}
