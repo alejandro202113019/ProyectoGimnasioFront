@@ -21,7 +21,7 @@ function Pago() {
   const fetchAPI = async () => {
     try {
       setLoading(true);
-      const result = await axios.get("http://localhost:5001/api/pagos");
+      const result = await axios.get("https://proyectogimnasioback.onrender.com/api/pagos");
       setData(result.data);
     } catch (e) {
       console.error("Hubo un error :(");
@@ -63,8 +63,8 @@ function Pago() {
     try {
       setLoading(true);
       const result = id
-        ? await axios.get(`http://localhost:5001/api/pagos/${id}`)
-        : await axios.get("http://localhost:5001/api/pagos");
+        ? await axios.get(`https://proyectogimnasioback.onrender.com/api/pagos/${id}`)
+        : await axios.get("https://proyectogimnasioback.onrender.com/api/pagos");
       setData(result.data);
       if (result.data.error) {
         setAlert1(true);
@@ -83,7 +83,7 @@ function Pago() {
     try {
       setLoading(true);
       const result = await axios.delete(
-        `http://localhost:5001/api/equipos/${idEquipo}`
+        `https://proyectogimnasioback.onrender.com/api/equipos/${idEquipo}`
       );
       setMensaje(result.data.message || result.data.error);
       setAlert1(true);
@@ -99,7 +99,7 @@ function Pago() {
   const agregar = async (nombre, estado) => {
     try {
       setLoading(true);
-      const result = await axios.post(`http://localhost:5001/api/equipos`, {
+      const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/equipos`, {
         Nombre_Equipo: nombre,
         Estado: estado,
       });
@@ -118,7 +118,7 @@ function Pago() {
     try {
       setLoading(true);
       const result = await axios.put(
-        `http://localhost:5001/api/equipos/${id}`,
+        `https://proyectogimnasioback.onrender.com/api/equipos/${id}`,
         {
           Nombre_Equipo: nombre,
           Estado: estado,

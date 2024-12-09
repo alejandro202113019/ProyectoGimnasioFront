@@ -26,7 +26,7 @@ function Clientes() {
   const fetchAPI = async () => {
     try {
       setLoading(true);
-      const result = await axios.get("http://localhost:5001/api/clientes");
+      const result = await axios.get("https://proyectogimnasioback.onrender.com/api/clientes");
       setClientes(result.data);
     } catch (e) {
       console.error("Hubo un error al cargar los datos.");
@@ -81,8 +81,8 @@ function Clientes() {
     try {
       setLoading(true);
       const result = id
-        ? await axios.get(`http://localhost:5001/api/clientes/${id}`)
-        : await axios.get("http://localhost:5001/api/clientes");
+        ? await axios.get(`https://proyectogimnasioback.onrender.com/api/clientes/${id}`)
+        : await axios.get("https://proyectogimnasioback.onrender.com/api/clientes");
       setClientes(result.data);
       setAlert1(false);
     } catch (e) {
@@ -97,7 +97,7 @@ function Clientes() {
   const eliminar = async () => {
     try {
       setLoading(true);
-      const result = await axios.delete(`http://localhost:5001/api/clientes/${idCliente}`);
+      const result = await axios.delete(`https://proyectogimnasioback.onrender.com/api/clientes/${idCliente}`);
       setMensaje(result.data.message || result.data.error);
       setAlert1(true);
       fetchAPI();
@@ -112,7 +112,7 @@ function Clientes() {
   const agregar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
     try {
       setLoading(true);
-      const result = await axios.post(`http://localhost:5001/api/clientes`, {
+      const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/clientes`, {
         Apellido: apellido,
         Email: correo,
         Fecha_Nacimiento: nacimiento,
@@ -134,7 +134,7 @@ function Clientes() {
   const actualizar = async (nombre, apellido, nacimiento, documento, correo, telefono) => {
     try {
       setLoading(true);
-      const result = await axios.put(`http://localhost:5001/api/clientes/${documento}`, {
+      const result = await axios.put(`https://proyectogimnasioback.onrender.com/api/clientes/${documento}`, {
         Apellido: apellido,
         Email: correo,
         Fecha_Nacimiento: nacimiento,

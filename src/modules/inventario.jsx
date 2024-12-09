@@ -21,7 +21,7 @@ function Inventario({loading, setLoading}) {
     const fetchAPI = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/equipos');
+            const result = await axios.get('https://proyectogimnasioback.onrender.com/api/equipos');
             setData(result.data)
         } catch(e) {
             console.log('hubo un error :(')
@@ -64,7 +64,7 @@ function Inventario({loading, setLoading}) {
         if (id === "") {
             try {
                 setLoading(true)
-                const result = await axios.get('http://localhost:5001/api/equipos');
+                const result = await axios.get('https://proyectogimnasioback.onrender.com/api/equipos');
                 setAlert1(false)
                 setData(result.data)
             } catch(e) {
@@ -75,7 +75,7 @@ function Inventario({loading, setLoading}) {
         } else {
             try {
                 setLoading(true)
-                const result = await axios.get(`http://localhost:5001/api/equipos/${id}`);
+                const result = await axios.get(`https://proyectogimnasioback.onrender.com/api/equipos/${id}`);
                 if (result.data.error) {
                     setAlert1(true)
                     setMensaje(result.data.error)
@@ -94,7 +94,7 @@ function Inventario({loading, setLoading}) {
         setConfirmar(false)
         try {
             setLoading(true)
-            const result = await axios.delete(`http://localhost:5001/api/equipos/${idEquipo}`);
+            const result = await axios.delete(`https://proyectogimnasioback.onrender.com/api/equipos/${idEquipo}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -114,7 +114,7 @@ function Inventario({loading, setLoading}) {
         setNuevo(false)
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/equipos`,{
+            const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/equipos`,{
                 Nombre_Equipo: nombre,
                 Estado: estado
             });
@@ -137,7 +137,7 @@ function Inventario({loading, setLoading}) {
         setModificar(false)
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/equipos/${id}`,{
+            const result = await axios.put(`https://proyectogimnasioback.onrender.com/api/equipos/${id}`,{
                 Nombre_Equipo: nombre,
                 Estado: estado
             });

@@ -21,7 +21,7 @@ function Asistencias() {
   const fetchAPI = async () => {
     try {
       setLoading(true);
-      const result = await axios.get("http://localhost:5001/api/asistencias");
+      const result = await axios.get("https://proyectogimnasioback.onrender.com/api/asistencias");
       setData(result.data);
     } catch (e) {
       console.error("Error al cargar asistencias");
@@ -61,8 +61,8 @@ function Asistencias() {
     try {
       setLoading(true);
       const result = id
-        ? await axios.get(`http://localhost:5001/api/asistencias/${id}`)
-        : await axios.get("http://localhost:5001/api/asistencias");
+        ? await axios.get(`https://proyectogimnasioback.onrender.com/api/asistencias/${id}`)
+        : await axios.get("https://proyectogimnasioback.onrender.com/api/asistencias");
       setData(result.data);
       setAlert1(false);
     } catch (e) {
@@ -78,7 +78,7 @@ function Asistencias() {
     try {
       setLoading(true);
       const result = await axios.delete(
-        `http://localhost:5001/api/asistencias/${idAsistencia}`
+        `https://proyectogimnasioback.onrender.com/api/asistencias/${idAsistencia}`
       );
       setMensaje(result.data.message || result.data.error);
       setAlert1(true);
@@ -95,7 +95,7 @@ function Asistencias() {
     try {
       setLoading(true);
       const result = await axios.get(
-        `http://localhost:5001/api/membresias/${clientes.ID_Cliente}`
+        `https://proyectogimnasioback.onrender.com/api/membresias/${clientes.ID_Cliente}`
       );
       if (result.data.error) {
         setMensaje(result.data.error);
@@ -109,7 +109,7 @@ function Asistencias() {
           setMensaje(`El cliente ${clientes.Nombre} ${clientes.Apellido} no tiene una membresía asignada`);
           setAlert1(true);
         } else if (result.data.Estado === "Activa") {
-          const postResult = await axios.post("http://localhost:5001/api/asistencias", {
+          const postResult = await axios.post("https://proyectogimnasioback.onrender.com/api/asistencias", {
             ID_Cliente: clientes.ID_Cliente,
             FechaAsistencia: obtenerFechaActual(),
             Hora_Entrada: obtenerHoraActual(),
@@ -145,7 +145,7 @@ function Asistencias() {
     try {
       setLoading(true);
       const result = await axios.put(
-        `http://localhost:5001/api/asistencias/${idAsistencia}`,
+        `https://proyectogimnasioback.onrender.com/api/asistencias/${idAsistencia}`,
         {
           FechaAsistencia: obtenerFechaActual(),
           Hora_Entrada: "",
@@ -168,7 +168,7 @@ function Asistencias() {
   const buscarCliente = async (id) => {
     try {
       setLoading(true);
-      const result = await axios.get(`http://localhost:5001/api/clientes/${id}`);
+      const result = await axios.get(`https://proyectogimnasioback.onrender.com/api/clientes/${id}`);
       if (result.data.error) {
         setMensaje(result.data.error);
         setAlert1(true);

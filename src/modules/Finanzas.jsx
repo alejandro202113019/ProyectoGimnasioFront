@@ -35,13 +35,13 @@ const Finanzas = () => {
         topGastosRes,
         porcentajeRes,
       ] = await Promise.all([
-        axios.get("http://localhost:5001/api/ingresos"),
-        axios.get("http://localhost:5001/api/gastosTotales"),
-        axios.get("http://localhost:5001/api/balance"),
-        axios.get("http://localhost:5001/api/gastosTotales/mes"),
-        axios.get("http://localhost:5001/api/resumen-mensual"),
-        axios.get("http://localhost:5001/api/top-gastos?limite=5"),
-        axios.get("http://localhost:5001/api/porcentaje-gastos"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/ingresos"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/gastosTotales"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/balance"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/gastosTotales/mes"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/resumen-mensual"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/top-gastos?limite=5"),
+        axios.get("https://proyectogimnasioback.onrender.com/api/porcentaje-gastos"),
       ]);
 
       // Transformar datos de gastos por mes para Chart.js

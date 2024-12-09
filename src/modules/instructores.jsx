@@ -26,7 +26,7 @@ function Instructores() {
   const fetchAPI = async () => {
     try {
       setLoading(true);
-      const result = await axios.get("http://localhost:5001/api/instructores");
+      const result = await axios.get("https://proyectogimnasioback.onrender.com/api/instructores");
       setData(result.data);
     } catch (e) {
       console.error("Error al cargar instructores");
@@ -81,8 +81,8 @@ function Instructores() {
     try {
       setLoading(true);
       const result = id
-        ? await axios.get(`http://localhost:5001/api/instructores/${id}`)
-        : await axios.get("http://localhost:5001/api/instructores");
+        ? await axios.get(`https://proyectogimnasioback.onrender.com/api/instructores/${id}`)
+        : await axios.get("https://proyectogimnasioback.onrender.com/api/instructores");
       setData(result.data);
       setAlert1(false);
     } catch (e) {
@@ -98,7 +98,7 @@ function Instructores() {
     try {
       setLoading(true);
       const result = await axios.delete(
-        `http://localhost:5001/api/instructores/${idInstructor}`
+        `https://proyectogimnasioback.onrender.com/api/instructores/${idInstructor}`
       );
       setMensaje(result.data.message || result.data.error);
       setAlert1(true);
@@ -114,7 +114,7 @@ function Instructores() {
   const agregar = async (nombre, apellido, especialidad, documento, correo, telefono) => {
     try {
       setLoading(true);
-      const result = await axios.post(`http://localhost:5001/api/instructores`, {
+      const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/instructores`, {
         Apellido: apellido,
         Email: correo,
         Especialidad: especialidad,
@@ -136,7 +136,7 @@ function Instructores() {
   const actualizar = async (nombre, apellido, especialidad, documento, correo, telefono) => {
     try {
       setLoading(true);
-      const result = await axios.put(`http://localhost:5001/api/instructores/${documento}`, {
+      const result = await axios.put(`https://proyectogimnasioback.onrender.com/api/instructores/${documento}`, {
         Apellido: apellido,
         Email: correo,
         Especialidad: especialidad,

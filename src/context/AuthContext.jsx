@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
 // Configurar axios con la URL base de tu backend
-axios.defaults.baseURL = 'http://localhost:5001/api'; // Ajusta esto a tu URL de backend real
+axios.defaults.baseURL = 'https://proyectogimnasioback.onrender.com/api'; // Ajusta esto a tu URL de backend real
 
 // Crear un contexto de autenticación
 const AuthContext = createContext(null);

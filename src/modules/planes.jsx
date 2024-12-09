@@ -23,7 +23,7 @@ function Plan({loading, setLoading}) {
     const fetchAPI = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/planes');
+            const result = await axios.get('https://proyectogimnasioback.onrender.com/api/planes');
             setData(result.data)
         } catch(e) {
             console.log('hubo un error :(')
@@ -78,7 +78,7 @@ function Plan({loading, setLoading}) {
         if (id === "") {
             try {
                 setLoading(true)
-                const result = await axios.get('http://localhost:5001/api/planes');
+                const result = await axios.get('https://proyectogimnasioback.onrender.com/api/planes');
                 setAlert1(false)
                 setData(result.data)
             } catch(e) {
@@ -89,7 +89,7 @@ function Plan({loading, setLoading}) {
         } else {
             try {
                 setLoading(true)
-                const result = await axios.get(`http://localhost:5001/api/planes/${id}`);
+                const result = await axios.get(`https://proyectogimnasioback.onrender.com/api/planes/${id}`);
                 if (result.data.error) {
                     setAlert1(true)
                     setMensaje(result.data.error)
@@ -108,7 +108,7 @@ function Plan({loading, setLoading}) {
         setConfirmar(false)
         try {
             setLoading(true)
-            const result = await axios.delete(`http://localhost:5001/api/planes/${idPlan}`);
+            const result = await axios.delete(`https://proyectogimnasioback.onrender.com/api/planes/${idPlan}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -128,7 +128,7 @@ function Plan({loading, setLoading}) {
         setNuevo(false)
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/planes`,{
+            const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/planes`,{
                 Descripcion: descripcion,
                 Duracion: parseInt(duracion),
                 Nombre_Plan: nombre,
@@ -153,7 +153,7 @@ function Plan({loading, setLoading}) {
         setModificar(false)
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/planes/${id}`,{
+            const result = await axios.put(`https://proyectogimnasioback.onrender.com/api/planes/${id}`,{
                 ID_Plan: id,
                 Descripcion: descripcion,
                 Duracion: parseInt(duracion),

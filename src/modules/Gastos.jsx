@@ -18,7 +18,7 @@ const Gastos = () => {
   // Función para cargar los datos desde la API
   const fetchGastos = async () => {
     try {
-      const response = await axios.get("http://localhost:5001/api/gastos");
+      const response = await axios.get("https://proyectogimnasioback.onrender.com/api/gastos");
       setGastos(response.data);
       setLoading(false);
     } catch (err) {
@@ -54,7 +54,7 @@ const Gastos = () => {
 
     try {
       // Enviar solicitud POST para crear nuevo gasto
-      await axios.post("http://localhost:5001/api/gastos", {
+      await axios.post("https://proyectogimnasioback.onrender.com/api/gastos", {
         Descripcion: nuevoGasto.Descripcion,
         Monto: parseFloat(nuevoGasto.Monto),
         Fecha_Gasto: nuevoGasto.Fecha_Gasto,

@@ -32,7 +32,7 @@ function Membresias({loading, setLoading}) {
     const fetchAPI = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/membresias');
+            const result = await axios.get('https://proyectogimnasioback.onrender.com/api/membresias');
             setData(result.data)
         } catch(e) {
             console.log('hubo un error :(')
@@ -44,7 +44,7 @@ function Membresias({loading, setLoading}) {
     const fetchAPIPlanes = async () => {
         try {
             setLoading(true)
-            const result = await axios.get('http://localhost:5001/api/planes');
+            const result = await axios.get('https://proyectogimnasioback.onrender.com/api/planes');
             setPlanes(result.data)
         } catch(e) {
             console.log('hubo un error :(')
@@ -107,7 +107,7 @@ function Membresias({loading, setLoading}) {
         if (id === "") {
             try {
                 setLoading(true)
-                const result = await axios.get('http://localhost:5001/api/membresias');
+                const result = await axios.get('https://proyectogimnasioback.onrender.com/api/membresias');
                 setAlert1(false)
                 setData(result.data)
             } catch(e) {
@@ -118,7 +118,7 @@ function Membresias({loading, setLoading}) {
         } else {
             try {
                 setLoading(true)
-                const result = await axios.get(`http://localhost:5001/api/membresias/${id}`);
+                const result = await axios.get(`https://proyectogimnasioback.onrender.com/api/membresias/${id}`);
                 if (result.data.error) {
                     setAlert1(true)
                     setMensaje(result.data.error)
@@ -138,7 +138,7 @@ function Membresias({loading, setLoading}) {
         setConfirmar(false)
         try {
             setLoading(true)
-            const result = await axios.delete(`http://localhost:5001/api/membresia/${idClente}`);
+            const result = await axios.delete(`https://proyectogimnasioback.onrender.com/api/membresia/${idClente}`);
             if (result.data.message) {
                 setMensaje(result.data.message)
                 setAlert1(true)
@@ -159,7 +159,7 @@ function Membresias({loading, setLoading}) {
         actualizar()
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/pagos`,{
+            const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/pagos`,{
                 Fecha_Pago: obtenerFechaActual(),
                 ID_Membresia: idMembresia,
                 ID_Pago: idClente,
@@ -185,7 +185,7 @@ function Membresias({loading, setLoading}) {
         setAsignar(false)
         try {
             setLoading(true)
-            const result = await axios.post(`http://localhost:5001/api/membresias`,{
+            const result = await axios.post(`https://proyectogimnasioback.onrender.com/api/membresias`,{
                 Estado: estado,
                 Fecha_Fin: fecha_fin,
                 Fecha_Inicio: fecha_inicio,
@@ -211,7 +211,7 @@ function Membresias({loading, setLoading}) {
     const actualizar = async () => {
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/membresias/${idClente}`,{
+            const result = await axios.put(`https://proyectogimnasioback.onrender.com/api/membresias/${idClente}`,{
                 Estado: 'null',
                 Fecha_Fin: fechaFin,
                 Fecha_Inicio: 'null',
@@ -238,7 +238,7 @@ function Membresias({loading, setLoading}) {
         setAsignar(false)
         try {
             setLoading(true)
-            const result = await axios.put(`http://localhost:5001/api/membresias/${id}`,{
+            const result = await axios.put(`https://proyectogimnasioback.onrender.com/api/membresias/${id}`,{
                 Estado: estado,
                 Fecha_Fin: fecha_fin,
                 Fecha_Inicio: fecha_inicio,
